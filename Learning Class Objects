@@ -1,0 +1,52 @@
+# Practice Lessons
+
+class Circle:
+  pi = 3.14
+  def area(self, radius):
+    return self.pi * radius ** 2
+
+circle = Circle()
+
+#Medium pizza is 12 inches across
+pizza_area = circle.area(12/2)
+
+#Teaching table is 36 inches across
+teaching_table_area = circle.area(36/2)
+
+#Round Room auditorium is 11460 inches across
+round_room_area = circle.area(11460/2)
+
+print(pizza_area)
+print(teaching_table_area)
+print(round_room_area)
+
+
+can_we_count_it = [{'s': False}, "sassafrass", 18, ["a", "c", "s", "d", "s"]]
+
+for variable in can_we_count_it:
+  if hasattr(variable, "count"):
+    print(str(type(variable)) + " has the count attribute!")
+  else:
+    print(str(type(variable)) + " does not have the count attribute :(")
+
+
+class Circle:
+  pi = 3.14
+  def __init__(self, diameter):
+    print("Creating circle with diameter {d}".format(d=diameter))
+    # Add assignment for self.radius here:
+    self.radius = diameter/2
+
+  def circumference(self):
+     return 2 * self.pi * self.radius
+
+  def __repr__(self):
+     return "Circle with radius {radius}".format(radius=self.radius)
+  
+medium_pizza = Circle(12)
+teaching_table = Circle(36)
+round_room = Circle(11460)
+
+print(medium_pizza)
+print(teaching_table)
+print(round_room)
