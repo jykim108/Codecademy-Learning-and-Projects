@@ -56,3 +56,37 @@ import pandas as pd
 
 df = pd.read_csv('sample.csv')
 print(df)
+
+# You’re working for a Hollywood studio, trying to use data to predict the next big hit. 
+# Load the CSV imdb.csv into a variable called df, so that you can learn about popular movies from the past 90 years.
+# Let’s learn about these movies.
+
+import codecademylib3
+import pandas as pd
+
+#load the CSV below:
+
+df = pd.read_csv('imdb.csv')
+print(df.head())
+
+  id                                       name   genre  year  imdb_rating
+0   1                                     Avatar  action  2009          7.9
+1   2                             Jurassic World  action  2015          7.3
+2   3                               The Avengers  action  2012          8.1
+3   4                            The Dark Knight  action  2008          9.0
+4   5  Star Wars: Episode I - The Phantom Menace  action  1999          6.6
+
+# What exactly is in this dataset?
+print(df.info())
+
+<class 'pandas.core.frame.DataFrame'>
+RangeIndex: 220 entries, 0 to 219
+Data columns (total 5 columns):
+id             220 non-null int64
+name           220 non-null object
+genre          220 non-null object
+year           220 non-null int64
+imdb_rating    220 non-null float64
+dtypes: float64(1), int64(2), object(2)
+memory usage: 8.7+ KB
+None
