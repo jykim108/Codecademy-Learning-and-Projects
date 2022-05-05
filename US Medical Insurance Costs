@@ -1,0 +1,42 @@
+import csv
+import statistics
+
+with open("insurance.csv", "r+") as insurance_file:
+    insurance_data = csv.DictReader(insurance_file)
+
+    age_data = []
+    sex_data = []
+    bmi_data = []
+    children_data = []
+    smoker_data = []
+    region_data = []
+    insurance_cost = []
+    
+    for row in insurance_data:
+        age_data.append(row["age"])
+        sex_data.append(row["sex"])
+        bmi_data.append(row["bmi"])
+        children_data.append(row["children"])
+        smoker_data.append(row["smoker"])
+        region_data.append(row['region'])
+        insurance_cost.append(row['charges'])
+        
+total_bmi = 0
+for bmi in bmi_data:
+  total_bmi += float(bmi)
+  avg_bmi = total_bmi/len(bmi_data)
+  
+print("The average BMI of the patients is " + str(avg_bmi))
+The average BMI of the patients is 61.3267937219733
+
+print("The average BMI of the patients is " + str(int(avg_bmi)))
+The average BMI of the patients is 61
+
+only_numbers_age = [i for i in age_data if i.isnumeric()]
+print(only_numbers_age)
+
+avg_age = sum(only_numbers_age)/len(only_numbers_age)
+#ERROR: 
+Traceback (most recent call last):
+  at block 9, line 1
+TypeError: unsupported operand type(s) for +: 'int' and 'str'###
