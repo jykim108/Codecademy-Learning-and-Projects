@@ -1,0 +1,19 @@
+# Find the smallest error
+
+smallest_error = float("inf")
+
+possible_ms = [i*0.1 for i in range(-100, 101)]
+possible_bs = [i*0.1 for i in range(-200, 201)]
+for m in possible_ms:
+    for b in possible_bs:
+        if (smallest_error > calculate_all_error(m, b, datapoints)):
+            smallest_error = calculate_all_error(m, b, datapoints)
+            best_m = m
+            best_b = b
+            
+print(best_m)
+print(best_b)
+print(smallest_error)
+0.30000000000000004
+1.7000000000000002
+4.999999999999999
