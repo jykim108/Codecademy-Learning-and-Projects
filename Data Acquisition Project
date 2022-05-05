@@ -1,0 +1,127 @@
+# Chocolate Scraping with Beautiful Soup
+
+import codecademylib3_seaborn
+from bs4 import BeautifulSoup
+import requests
+import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Let’s make a request to this site to get the raw HTML, which we can later turn into a BeautifulSoup object.
+raw_html = requests.get("https://content.codecademy.com/courses/beautifulsoup/cacao/index.html")
+
+# Create a BeautifulSoup object called soup to traverse this HTML.
+soup = BeautifulSoup(raw_html.content, "html.parser")
+
+# How many terrible chocolate bars are out there? And how many earned a perfect 5? Let’s make a histogram of this data.
+# Create an empty list called ratings to store all the ratings in.
+# Loop through the ratings tags and get the text contained in each one. Add it to the ratings list.
+# As you do this, convert the rating to a float, so that the ratings list will be numerical. This should help with calculations later.
+
+chocolate_rating = soup.find_all(attrs = {"class": "Rating"})
+ratings = []
+
+for score in chocolate_rating[1:]:
+  ratings.append(float(score.get_text()))
+  
+# Using Matplotlib, create a histogram of the ratings values: plt.hist(ratings)
+
+plt.hist(ratings)
+plt.show()
+
+# We want to now find the 10 most highly rated chocolatiers. 
+# One way to do this is to make a DataFrame that has the chocolate companies in one column, and the ratings in another. 
+# Then, we can do a groupby to find the ones with the highest average rating.
+# First, let’s find all the tags on the webpage that contain the company names.
+# Just like we did with ratings, we now want to make an empty list to hold company names.
+# Loop through the tags containing company names, and add the text from each tag to the list you just created.
+
+for name in companies[1:]:
+  company_names.append(name.get_text())
+
+
+# Create a DataFrame with a column “Company” corresponding to your companies list, and a column “Ratings” corresponding to your ratings list.
+rating_list = {"Company": company_names, "Ratings": ratings}
+company_rating = pd.DataFrame.from_dict(rating_list) 
+print(company_rating)
+
+# Use .groupby to group your DataFrame by Company and take the average of the grouped ratings.
+# Then, use the .nlargest command to get the 10 highest rated chocolate companies. Print them out.
+
+average_rating = company_rating.groupby("Company").Ratings.mean()
+top_10_companies = average_rating.nlargest(10)
+print(top_10_companies)
+
+# prints """
+Company
+Tobago Estate (Pralus)                  4.000000
+Heirloom Cacao Preservation (Zokoko)    3.875000
+Ocelot                                  3.875000
+Amedei                                  3.846154
+Matale                                  3.812500
+Patric                                  3.791667
+Idilio (Felchlin)                       3.775000
+Acalli                                  3.750000
+Chocola'te                              3.750000
+Christopher Morel (Felchlin)            3.750000
+"""
+
+# Using the same methods you used in the last couple of tasks, create a list that contains all of the cocoa percentages. 
+# Store each percent as a float, after stripping off the % character.
+
+cocoa = soup.select(".CocoaPercent")
+cocoa_list = []
+for percent in cocoa[1:]:
+  numbers_only = percent.get_text().strip("%")
+  cocoa_list.append(numbers_only)
+  
+# Add the cocoa percentages as a column called "CocoaPercentage" in the DataFrame that has companies and ratings in it.
+company_rating["CocoaPercentage"] = cocoa_list
+print(company_rating)
+
+import codecademylib3_seaborn
+from bs4 import BeautifulSoup
+import requests
+import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
+
+raw_html = requests.get("https://content.codecademy.com/courses/beautifulsoup/cacao/index.html")
+soup = BeautifulSoup(raw_html.content, "html.parser")
+
+chocolate_rating = soup.find_all(attrs = {"class": "Rating"})
+ratings = []
+
+for score in chocolate_rating[1:]:
+  ratings.append(float(score.get_text()))
+
+print(ratings)
+plt.hist(ratings)
+plt.show()
+
+companies = soup.select(".Company")
+company_names = []
+
+for name in companies[1:]:
+  company_names.append(name.get_text())
+
+rating_list = {"Company": company_names, "Ratings": ratings}
+company_rating = pd.DataFrame.from_dict(rating_list) 
+
+average_rating = company_rating.groupby("Company").Ratings.mean()
+top_10_companies = average_rating.nlargest(10)
+
+cocoa = soup.select(".CocoaPercent")
+cocoa_list = []
+for percent in cocoa[1:]:
+  numbers_only = percent.get_text().strip("%")
+  cocoa_list.append(numbers_only)
+
+
+company_rating["CocoaPercentage"] = cocoa_list
+print(company_rating)
+
+# Make a scatterplot of ratings (your_df.Rating) vs percentage of cocoa (your_df.CocoaPercentage).
+plt.scatter(company_rating.CocoaPercentage, company_rating.Ratings)
+plt.show()
+plt.clf()
