@@ -1,0 +1,58 @@
+# Creating Data Frames
+
+# You run an online clothing store called Panda’s Wardrobe. You need a DataFrame containing information about your products.
+# Create a DataFrame with the following data that your inventory manager sent you.
+# Add the code to create the columns Product Name and Color and their associated data.
+
+import codecademylib3
+import pandas as pd
+
+df1 = pd.DataFrame({
+  'Product ID': [1, 2, 3, 4],
+  # add Product Name and Color here
+  'Product Name': ['t-shirt', 't-shirt', 'skirt', 'skirt'],
+  'Color': ['blue', 'green', 'red', 'black']
+})
+
+print(df1)
+
+# You can also add data using lists.
+# You’re running a chain of pita shops called Pita Power. You want to create a DataFrame with information on your different store locations.
+# Use a list of lists to create a DataFrame with the following data.
+
+import codecademylib3
+import pandas as pd
+
+df2 = pd.DataFrame([
+  [1, 'San Diego', 100],
+  [2, 'Los Angeles', 120],
+  # Fill in rows 3 and 4
+  [3, 'San Francisco', 90],
+  [4, 'Sacramento', 115]
+  ],
+  columns=[
+    #add column names here
+  'Store ID', 'Location', 'Number of Employees'])
+
+print(df2)
+
+# Comma Separate Variables
+# You run a cupcake store and want to create a record of all of the cupcakes that you offer.
+# Write the following data as a CSV in cupcakes.csv.
+
+name,cake_flavor,frosting_flavor,topping
+Chocolate Cake,chocolate,chocolate,chocolate shavings
+Birthday Cake,vanilla,vanilla,rainbow sprinkles
+Carrot Cake,carrot,cream cheese,almonds
+
+# Loading and Saving CSVs
+
+# You’re working for the County of Whoville and you just received a CSV of data about the different cities in your county. 
+# Read the CSV 'sample.csv' into a variable called df, so that you can learn more about the cities.
+# Type print(df) on the next line and then run your code. What sort of data were you sent?
+
+import codecademylib3
+import pandas as pd
+
+df = pd.read_csv('sample.csv')
+print(df)
