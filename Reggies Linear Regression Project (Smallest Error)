@@ -1,4 +1,4 @@
-# Find the smallest error
+# Find the smallest error for dataset
 
 smallest_error = float("inf")
 
