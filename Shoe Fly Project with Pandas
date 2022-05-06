@@ -1,0 +1,12 @@
+# ShoeFly Data Analyst Project
+
+# In this example, you’ll be the data analyst for ShoeFly.com, a fictional online shoe store. You’ve seen this data; now it’s your turn to work with it!
+# Load the data from shoefly.csv into the variable orders.
+
+import codecademylib3
+import pandas as pd
+
+orders = pd.read_csv('shoefly.csv')
+
+# Inspect the first 5 lines of the data.
+print(orders.head())
