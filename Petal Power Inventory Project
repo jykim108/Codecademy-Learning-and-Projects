@@ -1,0 +1,12 @@
+# You’re the lead data analyst for a chain of gardening stores called Petal Power. Help them analyze their inventory!
+# Data for all of the locations of Petal Power is in the file inventory.csv. Load the data into a DataFrame called inventory.
+
+import codecademylib3
+import pandas as pd
+
+df = pd.read_csv('inventory.csv')
+
+# Inspect the first 10 rows of inventory.
+
+The first 10 rows represent data from your Staten Island location. Select these rows and save them to staten_island.
+print(df)
