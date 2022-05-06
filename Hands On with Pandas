@@ -140,11 +140,6 @@ march = df.iloc[2]
 april_may_june = df.iloc[3:6]
 print(april_may_june)
 
-# Prints:
-    month	clinic_east	clinic_north	clinic_south	clinic_west
-3	  April	  80	          80	            54	        180
-4	  May	    51	          54	            54	        154
-5	  June	  112	          109	            79	        129
 
 # You’re going to staff the clinic for January of this year. You want to know how many visits took place in January of last year, to help you prepare.
 # Create variable january using a logical statement that selects the row of df where the 'month' column is 'January'.
@@ -153,10 +148,6 @@ print(april_may_june)
 january = df[df.month == 'January']
 print(january)
 
-# Prints: 
-	  month	clinic_east	clinic_north	clinic_south	clinic_west
-0	 January	  100	        100	            23	        100
-
 # You want to see how the number of clinic visits changed between March and April.
 # Create the variable march_april, which contains the data from March and April. Do this using two logical statements combined using |, which means “or”.
 # Inspect march_april using print.
@@ -164,7 +155,19 @@ print(january)
 march_april = df[(df.month == 'March') | (df.month == 'April')]
 print(march_april)
 
-# Prints:
-    month	clinic_east	clinic_north	clinic_south	clinic_west
-2	  March	     81	         96	          65	          96
-3	  April	     80	         80	          54	          180
+# Another doctor thinks that you have a lot of clinic visits in the late Winter.
+# Create the variable january_february_march, containing the data from January, February, and March. Do this using a single logical statement with the isin command.
+
+january_february_march = df[df.month.isin(['January', 'February', 'March'])]
+print(january_february_march)
+
+# Examine the code in the workspace. Note that df2 is a subset of rows from df.
+# Note that the indices on df2 are not consecutive.
+df2 = df.loc[[1, 3, 5]]
+print(df2)
+
+# Create a new DataFrame called df3 by resetting the indices on df2 (don’t use inplace or drop). Did df2 change after you ran this command?
+df3 = df2.reset_index()
+
+# Reset the indices of df2 by using the keyword inplace=True and drop=True. Did the indices of df2 change? How is df2 different from df3?
+df3 = df2.reset_index(inplace=True, drop=True)
