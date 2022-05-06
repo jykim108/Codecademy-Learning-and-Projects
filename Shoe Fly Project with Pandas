@@ -24,3 +24,19 @@ frances_palmer = orders[(orders.first_name == 'Frances') & (orders.last_name == 
 # Select all orders for shoe_type: clogs, boots, and ballet flats and save them to the variable comfy_shoes.
 
 comfy_shoes = orders[orders.shoe_type.isin(['clogs', 'boots', 'ballet flats'])]
+
+
+# More messy order data has been loaded into the variable orders. Examine the first 5 rows of the data using print and .head().
+print(orders.head())
+
+# Many of our customers want to buy vegan shoes (shoes made from materials that do not come from animals). 
+# Add a new column called shoe_source, which is vegan if the materials is not leather and animal otherwise.
+
+mylambda = lambda x: 'vegan' if x != 'leather' else 'animal'
+orders['shoe_source'] = orders.shoe_material.apply(mylambda)
+
+# Our marketing department wants to send out an email to each customer. 
+# Using the columns last_name and gender create a column called salutation which contains Dear Mr. <last_name> for men and Dear Ms. <last_name> for women.
+
+gender_lambda = lambda row: 'Dear Mr. ' + row['last_name'] if row['gender'] == 'male' else 'Dear Ms. ' + row['last_name']
+orders['salutation'] = orders.apply(gender_lambda, axis=1)
