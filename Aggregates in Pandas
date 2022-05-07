@@ -22,11 +22,11 @@ num_colors = orders.shoe_color.nunique()
 pricey_shoes = orders.groupby('shoe_type').price.max()
 print(pricey_shoes)
 
-	            price
+	        price
 ballet flats	 498
-sandals	       498
-stilettos	     468
-wedges	       488
+sandals	      	 498
+stilettos	 468
+wedges	         488
 
 # Modify your code from the previous exercise so that it ends with reset_index, which will change pricey_shoes into a DataFrame.
 # Examine the object that you’ve just created using
