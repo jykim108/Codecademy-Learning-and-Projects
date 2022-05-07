@@ -35,11 +35,11 @@ pricey_shoes = orders.groupby('shoe_type').price.max().reset_index()
 
 print(pricey_shoes)
 
-	  shoe_type	    price
-0	 ballet flats	   498
-1	   sandals	     498
-2	  stilettos	     468
-3	   wedges	       488
+	shoe_type	    price
+0      ballet flats	     498
+1	 sandals	     498
+2	stilettos	     468
+3	 wedges	      	     488
 
 
 # Let’s calculate the 25th percentile for shoe price for each shoe_color to help Marketing decide if we have enough cheap shoes on sale. 
