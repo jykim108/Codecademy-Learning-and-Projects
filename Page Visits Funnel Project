@@ -14,16 +14,27 @@ print(checkout.head())
 print(purchase.head())
 
 # Combine visits and cart using a left merge.
-# How long is your merged DataFrame?
+# How long is your merged DataFrame? (yields 2000)
 
 visits_and_cart = pd.merge(visits, cart, how='left')
-print(len(visits_and_cart))
+total_visits = len(visits_and_cart)
 
-# How many of the timestamps are null for the column cart_time?
+# How many of the timestamps are null for the column cart_time? (yields 1652)
 # What do these null rows mean?
 
-carts_are_null = cart['cart_time'].isnull().count()
+carts_are_null = len(visits_and_cart[visits_and_cart.cart_time.isnull()])
 
-# What percent of users who visited Cool T-Shirts Inc. ended up not placing a t-shirt in their cart?
+# What percent of users who visited Cool T-Shirts Inc. ended up not placing a t-shirt in their cart? (yields 82.6%)
 # Note: To calculate percentages, it will be helpful to turn either the numerator or the denominator into a float, \
 # by using float(), with the number to convert passed in as input. Otherwise, Python will use integer division, which truncates decimal points.
+
+null_cart = carts_are_null / total_visits * 100
+
+# Repeat the left merge for cart and checkout and count null values. 
+# What percentage of users put items in their cart, but did not proceed to checkout? (yields 25.31%)
+
+cart_checkout = pd.merge(cart, checkout, how='left')
+total_cart = len(cart_checkout)
+null_cart = len(cart_checkout[cart_checkout.checkout_time.isnull()])
+
+percent_null = null_cart / total_cart * 100
