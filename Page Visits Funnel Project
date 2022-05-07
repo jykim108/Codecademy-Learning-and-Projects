@@ -1,0 +1,29 @@
+# Multiple Tables in Pandas Project
+
+# Cool T-Shirts Inc. has asked you to analyze data on visits to their website. 
+# Your job is to build a funnel, which is a description of how many people continue to the next step of a multi-step process.
+# Inspect the DataFrames using print and head:
+# visits lists all of the users who have visited the website
+# cart lists all of the users who have added a t-shirt to their cart
+# checkout lists all of the users who have started the checkout
+# purchase lists all of the users who have purchased a t-shirt
+
+print(visits.head())
+print(cart.head())
+print(checkout.head())
+print(purchase.head())
+
+# Combine visits and cart using a left merge.
+# How long is your merged DataFrame?
+
+visits_and_cart = pd.merge(visits, cart, how='left')
+print(len(visits_and_cart))
+
+# How many of the timestamps are null for the column cart_time?
+# What do these null rows mean?
+
+carts_are_null = cart['cart_time'].isnull().count()
+
+# What percent of users who visited Cool T-Shirts Inc. ended up not placing a t-shirt in their cart?
+# Note: To calculate percentages, it will be helpful to turn either the numerator or the denominator into a float, \
+# by using float(), with the number to convert passed in as input. Otherwise, Python will use integer division, which truncates decimal points.
