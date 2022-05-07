@@ -31,10 +31,46 @@ carts_are_null = len(visits_and_cart[visits_and_cart.cart_time.isnull()])
 null_cart = carts_are_null / total_visits * 100
 
 # Repeat the left merge for cart and checkout and count null values. 
-# What percentage of users put items in their cart, but did not proceed to checkout? (yields 25.31%)
+# What percentage of users put items in their cart, but did not proceed to checkout? (yields ~25.31%)
 
 cart_checkout = pd.merge(cart, checkout, how='left')
 total_cart = len(cart_checkout)
 null_cart = len(cart_checkout[cart_checkout.checkout_time.isnull()])
 
 percent_null = null_cart / total_cart * 100
+
+
+# Merge all four steps of the funnel, in order, using a series of left merges. Save the results to the variable all_data.
+# Examine the result using print and head.
+
+all_data = visits.merge(cart, how='left').merge(checkout, how='left').merge(purchase, how='left')
+print(all_data.head())
+
+
+# What percentage of users proceeded to checkout, but did not purchase a t-shirt? (yields ~74.79%)
+
+null_checkout = len(all_data[all_data.checkout_time.isnull()])
+no_shirt_purchase = null_checkout / len(all_data) * 100
+
+#  Which step of the funnel is weakest (i.e., has the highest percentage of users not completing it)?
+# How might Cool T-Shirts Inc. change their website to fix this problem?
+
+null_checkout = len(all_data[all_data.checkout_time.isnull()])
+null_cart = len(all_data[all_data.cart_time.isnull()])
+null_purchase = len(all_data[all_data.purchase_time.isnull()])
+
+print(null_checkout)
+print(null_cart)
+print(null_purchase)
+# yields 1774, 1652, and 1875 respectively
+
+
+# Using the giant merged DataFrame all_data that you created, let’s calculate the average time from initial visit to final purchase. 
+# Add a column that is the difference between purchase_time and visit_time.
+all_data['total_time'] = all_data.purchase_time - all_data.visit_time
+
+
+# Calculate the average time to purchase by applying the .mean() function to your new column.
+average_time = all_data.total_time.mean()
+print(average_time)
+# yields 0 days 00:43:53.360160
