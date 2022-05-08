@@ -36,3 +36,21 @@ df.rename(columns={
 def find_word(data, phrase):
   filter_word = lambda x: all(word.lower() in x.lower().split() for word in phrase)
   return data.loc[data['question'].apply(filter_word)]
+
+
+# We may want to eventually compute aggregate statistics, like .mean() on the " Value" column. 
+# But right now, the values in that column are strings. Convert the " Value" column to floats. If you’d like to, you can create a new column with the float values.
+# Now that you can filter the dataset of question, use your new column that contains the float values of each question to find the “difficulty” of certain topics. 
+# For example, what is the average value of questions that contain the word "King"?
+
+for symbol in new_value:
+  for char in symbol:
+    if char == '$':
+      char.replace('$', '')
+    elif char == ',':
+      char.replace(',', '')
+    elif char == 'None':
+      char.replace('None', 0)
+    else: 
+      char
+# Trying to figure out how to remove chars '$' and ',' from the Values
