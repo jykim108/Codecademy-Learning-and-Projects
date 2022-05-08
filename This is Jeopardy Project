@@ -54,3 +54,6 @@ for symbol in new_value:
     else: 
       char
 # Trying to figure out how to remove chars '$' and ',' from the Values
+
+df['new_value'] = df['value'].apply(lambda x: float(x[1:].replace(',', '')) if x != 'None' else = 0)
+# also does not work
