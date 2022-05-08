@@ -36,4 +36,3 @@ df.rename(columns={
 def find_word(data, phrase):
   filter_word = lambda x: all(word.lower() in x.lower().split() for word in phrase)
   return data.loc[data['question'].apply(filter_word)]
-# Function only returns list if all words in list are present
