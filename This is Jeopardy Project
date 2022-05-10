@@ -34,7 +34,7 @@ df.rename(columns={
 # Every row had the strings "King" and "England" somewhere in its " Question".
 
 def find_word(data, phrase):
-  filter_word = lambda x: all(word.lower() in x.lower().split() for word in phrase)
+  filter_word = lambda x: all(word.lower() in x.lower() for word in phrase)
   return data.loc[data['question'].apply(filter_word)]
 
 
@@ -43,17 +43,17 @@ def find_word(data, phrase):
 # Now that you can filter the dataset of question, use your new column that contains the float values of each question to find the “difficulty” of certain topics. 
 # For example, what is the average value of questions that contain the word "King"?
 
-for symbol in new_value:
-  for char in symbol:
-    if char == '$':
-      char.replace('$', '')
-    elif char == ',':
-      char.replace(',', '')
-    elif char == 'None':
-      char.replace('None', 0)
-    else: 
-      char
-# Trying to figure out how to remove chars '$' and ',' from the Values
+df['new_value'] = df['value'].apply(lambda x: float(x[1:].replace(',' , '')) if x != 'None' else 0)
 
-df['new_value'] = df['value'].apply(lambda x: float(x[1:].replace(',', '')) if x != 'None' else = 0)
-# also does not work
+king_value = find_word(df, ['King'])
+print(king_value['new_value'].mean())
+
+# prints 670.8108108108108
+
+
+# Write a function that returns the count of the unique answers to all of the questions in a dataset. 
+# For example, after filtering the entire dataset to only questions containing the word "King", we could then find all of the unique answers to those questions. 
+# The answer “Henry VIII” appeared 3 times and was the most common answer.
+
+def unique_answer(data, word):
+  return data['answer'].value_counts()
