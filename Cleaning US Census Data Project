@@ -64,13 +64,14 @@ us_census['Women'] = us_census.split_gender.str.get(1)
 
 us_census.Men = us_census['Men'].replace('M', '', regex=True)
 us_census.Women = us_census['Women'].replace('F', '', regex=True)
-us_census = us_census[['Unnamed: 0', 'State', 'TotalPop', 'Hispanic', 'White', 'Black', 'Asian', 'Pacific', 'Income', 'Men', 'Women']]
+us_census = us_census[['State', 'TotalPop', 'Hispanic', 'White', 'Black', 'Asian', 'Pacific', 'Income', 'Men', 'Women']]
 
 # Use matplotlib to make a scatterplot!
 # plt.scatter(the_women_column, the_income_column) 
 
 us_census['Men'] = pd.to_numeric(us_census['Men'])
 us_census['Women'] = pd.to_numeric(us_census['Women'])
+us_census['Income'] = pd.to_numeric(us_census['Income'])
 plt.scatter(us_census.Women, us_census.Income)
 plt.show()
 
@@ -84,10 +85,63 @@ pop_difference = us_census.TotalPop - us_census.Men
 us_census['Women'] = us_census.Women.fillna(pop_difference)
 
 
-
-
 # We forgot to check for duplicates! Use .duplicated() on your census DataFrame to see if we have duplicate rows in there.
 duplicates = us_census.duplicated()
 print(duplicates.value_counts())
 
-# Yields False: 60
+# Yields 
+False    51
+True      9
+
+# Drop those duplicates using the .drop_duplicates() function.
+us_census = us_census.drop_duplicates()
+
+# Now, your boss wants you to make a bunch of histograms out of the race data that you have. Look at the .columns again to see what the race categories are.
+print(us_census.columns)
+# Yields Index(['State', 'TotalPop', 'Hispanic', 'White', 'Black', 'Asian', 'Pacific', 'Income', 'Men', 'Women'], dtype='object')
+
+
+# Try to make a histogram for each one!
+# You will have to get the columns into numerical format, and those percentage signs will have to go.
+# Don’t forget to fill the nan values with something that makes sense!
+# NOTE: Only Pacific seems to have nan values
+
+us_census.Hispanic = us_census['Hispanic'].replace(['%'], '', regex=True)
+us_census.White = us_census['White'].replace(['%'], '', regex=True)
+us_census.Black = us_census['Black'].replace(['%'], '', regex=True)
+us_census.Asian = us_census['Asian'].replace(['%'], '', regex=True)
+us_census.Pacific = us_census['Pacific'].replace(['%'], '', regex=True)
+
+us_census['Hispanic'] = pd.to_numeric(us_census['Hispanic'])
+us_census['White'] = pd.to_numeric(us_census['White'])
+us_census['Black'] = pd.to_numeric(us_census['Black'])
+us_census['Asian'] = pd.to_numeric(us_census['Asian'])
+us_census['Pacific'] = pd.to_numeric(us_census['Pacific'])
+
+pacific_pop = 100 - (us_census.Hispanic + us_census.White + us_census.Black + us_census.Asian)
+us_census['Pacific'] = us_census.Pacific.fillna(pacific_pop)
+
+plt.hist(us_census['Hispanic'])
+plt.hist(us_census['White'])
+plt.hist(us_census['Black'])
+plt.hist(us_census['Asian'])
+plt.hist(us_census['Pacific'])
+plt.show()
+
+
+# Try to make some more interesting graphs to show your boss, and the world! 
+# You may need to clean the data even more to do it, or the cleaning you have already done may give you the ease of manipulation you’ve been searching for.
+
+# Self-Project: What, if any, is the difference between income in states dominated by women population between men and women?
+
+women_percent_list = us_census['Women Percent']
+income_women = []
+
+for percent in women_percent_list:
+  if percent > 50:
+    income_women.append(us_census['Income'])
+
+def avg_list(lst):
+  return sum(lst) / len(lst)
+
+print(avg_list(income_women))
