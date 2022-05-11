@@ -132,6 +132,7 @@ plt.show()
 # Try to make some more interesting graphs to show your boss, and the world! 
 # You may need to clean the data even more to do it, or the cleaning you have already done may give you the ease of manipulation you’ve been searching for.
 
+
 # SELF-PROJECT: What, if any, is the difference between income in states dominated by women population between men and women?
 
 us_census['Women Percent'] = (us_census['Women']/us_census['TotalPop']) * 100
