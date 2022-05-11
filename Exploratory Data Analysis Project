@@ -1,0 +1,129 @@
+# EDA: DIAGNOSING DIABETES
+# Imagine you are a data scientist interested in exploring data that looks at how certain diagnostic factors affect the diabetes outcome of women patients.
+# You will use your EDA skills to help inspect, clean, and validate the data.
+# Note: This dataset is from the National Institute of Diabetes and Digestive and Kidney Diseases. It contains the following columns:
+'''
+Pregnancies: Number of times pregnant
+Glucose: Plasma glucose concentration a 2 hours in an oral glucose tolerance test
+BloodPressure: Diastolic blood pressure
+SkinThickness: Triceps skinfold thickness
+Insulin: 2-Hour serum insulin
+BMI: Body mass index
+DiabetesPedigreeFunction: Diabetes pedigree function
+Age: Age (years)
+Outcome: Class variable (0 or 1)'''
+
+import codecademylib3
+import pandas as pd
+import numpy as np
+
+# Look at each of the nine columns in the documentation.
+# Next, let’s load in the diabetes data to start exploring.
+# Load the data in a variable called diabetes_data and print the first few rows.
+
+diabetes_data = pd.read_csv('diabetes.csv')
+print(diabetes_data.head())
+
+
+# How many columns (features) does the data contain?
+# How many rows (observations) does the data contain?
+print(diabetes_data.columns)
+print(len(diabetes_data))
+
+# Yields: Index(['Pregnancies', 'Glucose', 'BloodPressure', 'SkinThickness', 'Insulin',
+       'BMI', 'DiabetesPedigreeFunction', 'Age', 'Outcome'],
+      dtype='object'), 768
+    
+    
+# Let’s inspect diabetes_data further.
+# Do any of the columns in the data contain null (missing) values?
+
+print(diabetes_data.isna().sum())
+# Yields '''
+Pregnancies                 0
+Glucose                     0
+BloodPressure               0
+SkinThickness               0
+Insulin                     0
+BMI                         0
+DiabetesPedigreeFunction    0
+Age                         0
+Outcome                     0
+dtype: int64'''
+
+
+# While it’s technically true that none of the columns contain null values, that doesn’t necessarily mean that the data isn’t missing any values.
+# When exploring data, you should always question your assumptions and try to dig deeper.
+# To investigate further, calculate summary statistics on diabates_data using the .describe() method.
+
+print(diabetes_data.describe())
+
+# Yields '''Pregnancies Glucose  ...  DiabetesPedigreeFunction         Age
+count    768.000000  768.000000  ...                768.000000  768.000000
+mean      3.845052  120.894531  ...                  0.471876   33.240885
+std       3.369578   31.972618  ...                  0.331329   11.760232
+min       0.000000    0.000000  ...                  0.078000   21.000000
+25%       1.000000   99.000000  ...                  0.243750   24.000000
+50%       3.000000  117.000000  ...                  0.372500   29.000000
+75%       6.000000  140.250000  ...                  0.626250   41.000000
+max      17.000000  199.000000  ...                  2.420000   81.000000
+
+[8 rows x 8 columns]'''
+
+
+# Let’s see if we can get a more accurate view of the missing values in the data.
+# Use the following code to replace the instances of 0 with NaN in the five columns mentioned:
+
+diabetes_data[['Glucose','BloodPressure','SkinThickness','Insulin','BMI']] = \
+diabetes_data[['Glucose','BloodPressure','SkinThickness','Insulin','BMI']].replace(0,np.NaN)
+
+
+# Next, check for missing (null) values in all of the columns just like you did in Step 5.
+# Now how many missing values are there?
+
+print(diabetes_data.isna().sum())
+
+# Yields '''
+Pregnancies                   0
+Glucose                       5
+BloodPressure                35
+SkinThickness               227
+Insulin                     374
+BMI                          11
+DiabetesPedigreeFunction      0
+Age                           0
+Outcome                       0
+dtype: int64'''
+
+
+# Let’s take a closer look at these rows to get a better idea of why some data might be missing.
+# Print out all of the rows that contain missing (null) values.
+
+print(diabetes_data[diabetes_data.isna().any(axis=1)])
+
+
+# Next, take a closer look at the data types of each column in diabetes_data.
+# Does the result match what you would expect?
+'''
+Pregnancies                   int64
+Glucose                     float64
+BloodPressure               float64
+SkinThickness               float64
+Insulin                     float64
+BMI                         float64
+DiabetesPedigreeFunction    float64
+Age                           int64
+Outcome                      object
+dtype: object'''
+
+
+# To figure out why the Outcome column is of type object (string) instead of type int64, print out the unique values in the Outcome column.
+
+print(diabetes_data['Outcome'].unique())
+# Yields ['1' '0' 'O']
+
+
+# How might you resolve this issue?
+
+diabetes_data['Outcome'] = diabetes_data['Outcome'].replace('O', '0')
+diabetes_data['Outcome'] = pd.to_numeric(diabetes_data.Outcome)
