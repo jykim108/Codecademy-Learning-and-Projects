@@ -1,0 +1,51 @@
+# Dealing with Multiple Files
+
+# We can combine the use of glob, a Python library for working with files, with pandas to organize this data better. 
+# glob can open multiple files by using regex matching to get the filenames
+# We have 10 different files containing 100 students each. These files follow the naming structure:
+exams0.csv
+exams1.csv
+… up to exams9.csv
+# We are going to import each file using pandas, and combine all of the entries into one DataFrame.
+# First, create a variable called student_files and set it equal to the glob() of all of the csv files we want to import.
+# Create an empty list called df_list that will store all of the DataFrames we make from the files exams0.csv through exams9.csv.
+# Loop through the filenames in student_files, and create a DataFrame from each file. Append this DataFrame to df_list.
+
+import codecademylib3_seaborn
+import pandas as pd
+import glob
+
+student_files = glob.glob('exams*.csv')
+df_list = []
+
+for files in student_files:
+  data = pd.read_csv(files)
+  df_list.append(data)
+  
+# Concatenate all of the DataFrames in df_list into one DataFrame called students.
+# Print students and the length of students. Did we get all of them?
+
+students = pd.concat(df_list)
+print(students)
+print(len(students))
+
+# Yields 1000 rows and 6 columns of students
+
+
+# Reshaping Data
+# We can use pd.melt() to do this transformation. .melt() takes in a DataFrame, and the columns to unpack.
+# The parameters you provide are:
+
+frame: the DataFrame you want to melt
+id_vars: the column(s) of the old DataFrame to preserve
+value_vars: the column(s) of the old DataFrame that you want to turn into variables
+value_name: what to call the column of the new DataFrame that stores the values
+var_name: what to call the column of the new DataFrame that stores the variables
+
+# There is a column for the scores on the fractions exam, and a column for the scores on the probabilities exam.
+# We want to make each row an observation, so we want to transform this table.
+# Use pd.melt() to create a new table (still called students) that follows this structure.
+# Print the .head() and the .columns of students. Also, print out the .value_counts() of the column exam.
+
+print(students.head())
+print(students['exam'].value_counts())
