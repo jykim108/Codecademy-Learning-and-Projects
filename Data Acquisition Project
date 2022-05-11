@@ -1,4 +1,4 @@
-# Chocolate Scraping with Beautiful Soup
+# CHOCOLATE SCRAPING WITH BEAUTIFULSOUP
 
 import codecademylib3_seaborn
 from bs4 import BeautifulSoup
