@@ -47,6 +47,7 @@ var_name: what to call the column of the new DataFrame that stores the variables
 # Print the .head() and the .columns of students. Also, print out the .value_counts() of the column exam.
 
 print(students.head())
+print(students.column())
 print(students['exam'].value_counts())
 
 
@@ -105,3 +106,73 @@ students['age'] = students.gender_age.str[1:3]
 # Now, we don’t need that gender_age column anymore.
 # Let’s set the students DataFrame to be the students DataFrame with all columns except gender_age.
 students = students[['full_name', 'grade', 'exam', 'score', 'gender', 'age']]
+
+
+# SPLITTING BY CHARACTER
+# The students’ names are stored in a column called full_name.
+# We want to separate this data out into two new columns, first_name and last_name.
+# First, let’s create a Series object called name_split that splits the full_name by the " " character.
+
+import codecademylib3_seaborn
+import pandas as pd
+from students import students
+
+students['name_split'] = students.full_name.str.split(' ')
+
+# Now, let’s create a column called first_name that takes the first item in name_split.
+students['first_name'] = students.name_split.str.get(0)
+
+# Finally, let’s create a column called last_name that takes the second item in name_split.
+students['last_name'] = students.name_split.str.get(1)
+
+
+# STRING PARSING
+# Use regex to take out the % signs in the score column.
+
+import codecademylib3_seaborn
+import pandas as pd
+from students import students
+
+students.score = students['score'].replace(['%'], '', regex=True)
+
+# Convert the score column to a numerical type using the pd.to_numeric() function.
+students.score = pd.to_numeric(students.score)
+
+# Each value in grade looks like “9th grade”, “10th grade”, “11th grade”, or “12th grade”.
+# We want to pare that down to just having the numerical grade. Maybe we want to do linear regression on this data, which would require numerical inputs.
+# Use regex to extract the number from each string in grade and store those values back into the grade column.
+
+split_grade = students['grade'].str.split('(\d+)', expand=True)
+students['grade'] = split_grade[1]
+
+# Convert the grade column to be numerical values instead of objects.
+students['grade'] = pd.to_numeric(students['grade'])
+
+# Calculate the mean of grade, store it in a variable called avg_grade, and then print it out!
+
+avg_grade = students['grade'].mean()
+print(avg_grade)
+# Yields 10.620445344129555
+
+
+# MISSING VALUES
+# Get the mean of the score column. Store it in score_mean and print it out.
+
+import codecademylib3_seaborn
+import pandas as pd
+from students import students
+
+score_mean = students['score'].mean()
+print(score_mean)
+# Yields 77.69657422512235
+
+# We will assume that everyone who doesn’t have a score for an exam missed the test. 
+# We want to replace all nans with a score of 0. Let’s do this with the score column.
+# Fill all of the nans in students['score'] with 0.
+# Get the mean of the score column again. Store it in score_mean_2 and print it out.
+
+students = students.fillna(value={'score': 0})
+
+score_mean_2 = students['score'].mean()
+# Yields 72.30971659919028
+print(score_mean_2)
