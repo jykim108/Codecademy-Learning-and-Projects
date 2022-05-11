@@ -1,5 +1,4 @@
-# Calculating Column Statistics
-
+# CALCULATING COLUMN STATISTICS
 # Once more, we’ll revisit our orders from ShoeFly.com. Our new batch of orders is in the DataFrame orders. Examine the first 10 rows.
 orders = pd.read_csv('orders.csv')
 print(orders.head(10))
@@ -67,8 +66,7 @@ print(cheap_shoes)
 shoe_counts = orders.groupby(['shoe_type', 'shoe_color']).id.count().reset_index()
 
 
-# Pivot Tables
-
+# PIVOT TABLES
 # In the previous example, you created a DataFrame with the total number of shoes of each shoe_type/shoe_color combination purchased for ShoeFly.com.
 # The purchasing manager complains that this DataFrame is confusing.
 # Make it easier for her to compare purchases of different shoe colors of the same shoe type by creating a pivot table. 
