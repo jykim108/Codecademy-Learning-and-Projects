@@ -1,0 +1,93 @@
+# CLEANING US CENSUS DATA
+# You just got hired as a Data Analyst at the Census Bureau, which collects census data and creates interesting visualizations and insights from it.
+# The person who had your job before you left you all the data they had for the most recent census. It is in multiple csv files. 
+# They didn’t use pandas, they would just look through these csv files manually whenever they wanted to find something. 
+# Sometimes they would copy and paste certain numbers into Excel to make charts.
+# Your boss wants you to make some scatterplots and histograms by the end of the day. 
+# Can you get this data into pandas and into reasonable shape so that you can make these histograms?
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import codecademylib3_seaborn
+
+# The first visualization your boss wants you to make is a scatterplot that shows average income in a state vs proportion of women in that state.
+# Open some of the census csv files in the navigator (click the file icon in the top left corner of the code editor and then click on any of the csv files to open them). 
+# How are they named? What kind of information do they hold? Will they help us make this graph?
+# Using glob, loop through the census files available and load them into DataFrames. 
+# Then, concatenate all of those DataFrames together into one DataFrame, called something like us_census.
+
+import glob
+
+states_files = glob.glob('states*.csv')
+states_list = []
+
+for files in states_files:
+  data = pd.read_csv(files)
+  states_list.append(data)
+
+us_census = pd.concat(states_list)
+
+# Look at the .columns and the .dtypes of the us_census DataFrame. Are those datatypes going to hinder you as you try to make histograms?
+print(us_census.columns)
+print(us_census.dtypes)
+
+# Yields '''
+Index(['Unnamed: 0', 'State', 'TotalPop', 'Hispanic', 'White', 'Black',
+       'Native', 'Asian', 'Pacific', 'Income', 'GenderPop'],
+      dtype='object')
+Unnamed: 0     int64
+State         object
+TotalPop       int64
+Hispanic      object
+White         object
+Black         object
+Native        object
+Asian         object
+Pacific       object
+Income        object
+GenderPop     object
+dtype: object'''
+
+# Use regex to turn the Income column into a format that is ready for conversion into a numerical type.
+us_census.Income = us_census['Income'].replace(['\$'], '', regex=True)
+
+# Look at the GenderPop column. We are going to want to separate this into two columns, the Men column, and the Women column.
+# Split the column into those two new columns using str.split and separating out those results.
+
+us_census['split_gender'] = us_census.GenderPop.str.split('_')
+us_census['Men'] = us_census.split_gender.str.get(0)
+us_census['Women'] = us_census.split_gender.str.get(1)
+
+# Convert both of the columns into numerical datatypes.
+# There is still an M or an F character in each entry! We should remove those before we convert.
+
+us_census.Men = us_census['Men'].replace('M', '', regex=True)
+us_census.Women = us_census['Women'].replace('F', '', regex=True)
+us_census = us_census[['Unnamed: 0', 'State', 'TotalPop', 'Hispanic', 'White', 'Black', 'Asian', 'Pacific', 'Income', 'Men', 'Women']]
+
+# Use matplotlib to make a scatterplot!
+# plt.scatter(the_women_column, the_income_column) 
+
+us_census['Men'] = pd.to_numeric(us_census['Men'])
+us_census['Women'] = pd.to_numeric(us_census['Women'])
+plt.scatter(us_census.Women, us_census.Income)
+plt.show()
+
+# You want to double check your work. You know from experience that these monstrous csv files probably have nan values in them! 
+# Print out your column with the number of women per state to see.
+# We can fill in those nans by using pandas’ .fillna() function.
+# You have the TotalPop per state, and you have the Men per state. 
+# As an estimate for the nan values in the Women column, you could use the TotalPop of that state minus the Men for that state.
+
+pop_difference = us_census.TotalPop - us_census.Men
+us_census['Women'] = us_census.Women.fillna(pop_difference)
+
+
+
+
+# We forgot to check for duplicates! Use .duplicated() on your census DataFrame to see if we have duplicate rows in there.
+duplicates = us_census.duplicated()
+print(duplicates.value_counts())
+
+# Yields False: 60
