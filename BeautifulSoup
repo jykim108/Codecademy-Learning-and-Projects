@@ -1,4 +1,4 @@
-# Using BeautifulSoup for Web Scraping
+# USING BEAUTIFULSOUP FOR WEB SCRAPING
 
 import requests
 from bs4 import BeautifulSoup
@@ -8,20 +8,20 @@ webpage_response = requests.get('https://content.codecademy.com/courses/beautifu
 webpage = webpage_response.content
 soup = BeautifulSoup(webpage, "html.parser")
 
-#Print out the first p tag on the shellter.html page.
-#Print out the string associated with the first p tag on the shellter.html page
+# Print out the first p tag on the shellter.html page.
+# Print out the string associated with the first p tag on the shellter.html page
 
 print(soup.p)
 print(soup.p.string)
 
-#prints: <p class="text">Click to learn more about each turtle</p> AND Click to learn more about each turtle
+# prints: <p class="text">Click to learn more about each turtle</p> AND Click to learn more about each turtle
 
-#Loop through all of the children of the first div and print out each one.
+# Loop through all of the children of the first div and print out each one.
 for children in soup.div:
   print(children)
-#print: <h1>The Shellter</h1> AND <span class="brag">The #1 Turtle Adoption website!</span>
+# print: <h1>The Shellter</h1> AND <span class="brag">The #1 Turtle Adoption website!</span>
 
-#Find all of the a elements on the page and store them in a list called turtle_links. Print turtle_links.
+# Find all of the a elements on the page and store them in a list called turtle_links. Print turtle_links.
 import re
 turtle_links = soup.find_all("a")
 print(turtle_links)
@@ -29,20 +29,20 @@ print(turtle_links)
 turtle_links = soup.find_all("a")
 links = []
 
-#go through all of the a tags and get the links associated with them:
+# go through all of the a tags and get the links associated with them:
 
 for a in turtle_links:
   links.append(prefix+a["href"])
     
-#Define turtle_data:
+# Define turtle_data:
 turtle_data = {}
 
-#follow each link:
+# follow each link:
 for link in links:
   webpage = requests.get(link)
   turtle = BeautifulSoup(webpage.content, "html.parser")
   
-  #Add your code here:
+  # Add your code here:
   turtle_name = turtle.select(".name")[0]
   turtle_data[turtle_name] = []
 
