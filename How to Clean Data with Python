@@ -1,5 +1,4 @@
-# Dealing with Multiple Files
-
+# DEALING WITH MULTIPLE FILES
 # We can combine the use of glob, a Python library for working with files, with pandas to organize this data better. 
 # glob can open multiple files by using regex matching to get the filenames
 # We have 10 different files containing 100 students each. These files follow the naming structure:
@@ -32,7 +31,7 @@ print(len(students))
 # Yields 1000 rows and 6 columns of students
 
 
-# Reshaping Data
+# RESHAPING DATA
 # We can use pd.melt() to do this transformation. .melt() takes in a DataFrame, and the columns to unpack.
 # The parameters you provide are:
 
@@ -49,3 +48,60 @@ var_name: what to call the column of the new DataFrame that stores the variables
 
 print(students.head())
 print(students['exam'].value_counts())
+
+
+# DEALING WITH DUPLICATES
+# It seems like in the data collection process, some rows may have been recorded twice. 
+# Use the .duplicated() function on the students DataFrame to make a Series object called duplicates.
+# Print out the .value_counts() of the duplicates Series to see how many rows are exact duplicates.
+# Update the value of students to be the students table with the duplicates dropped.
+
+import codecademylib3_seaborn
+import pandas as pd
+from students import students
+
+duplicates = students.duplicated()
+print(duplicates.value_counts())
+
+# Yields  False    1976
+          True       24
+
+students = students.drop_duplicates()
+
+# Use the .duplicated() function again to make a Series object called duplicates after dropping the duplicates. 
+# Print out the value counts again. Are there any Trues left?
+
+duplicates = students.duplicated()
+print(duplicates.value_counts())
+# Yields False    1976
+
+
+# SPLITTING BY INDEX
+# Print out the columns of the students DataFrame.
+# The column gender_age sounds like it contains both gender and age!
+# Print out the .head() of the column to see what kind of data it contains.
+
+import codecademylib3_seaborn
+import pandas as pd
+from students import students
+
+print(students.columns)
+print(students['gender_age'].head())
+
+# Yields Index(['full_name', 'gender_age', 'grade', 'exam', 'score'], dtype='object')
+0    M14
+1    M18
+2    M18
+3    M18
+4    F17
+
+# It looks like the first character of the values in gender_age contains the gender, while the rest of the string contains the age. 
+# Let’s separate out the gender data into a new column called gender.
+students['gender'] = students.gender_age.str[0:1]
+
+# Now, separate out the age data into a new column called age.
+students['age'] = students.gender_age.str[1:3]
+
+# Now, we don’t need that gender_age column anymore.
+# Let’s set the students DataFrame to be the students DataFrame with all columns except gender_age.
+students = students[['full_name', 'grade', 'exam', 'score', 'gender', 'age']]
