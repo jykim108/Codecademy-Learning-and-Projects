@@ -132,16 +132,23 @@ plt.show()
 # Try to make some more interesting graphs to show your boss, and the world! 
 # You may need to clean the data even more to do it, or the cleaning you have already done may give you the ease of manipulation you’ve been searching for.
 
-# Self-Project: What, if any, is the difference between income in states dominated by women population between men and women?
+# SELF-PROJECT: What, if any, is the difference between income in states dominated by women population between men and women?
 
-women_percent_list = us_census['Women Percent']
-income_women = []
+us_census['Women Percent'] = (us_census['Women']/us_census['TotalPop']) * 100
 
-for percent in women_percent_list:
-  if percent > 50:
-    income_women.append(us_census['Income'])
+mylambda = lambda row: row['Income'] if row['Women Percent'] > 50 else None
 
 def avg_list(lst):
   return sum(lst) / len(lst)
 
-print(avg_list(income_women))
+us_census['Income in Women Dominate State'] = us_census.apply(mylambda, axis=1)
+us_census = us_census.dropna()
+print(avg_list(us_census['Income in Women Dominate State']))
+# Yields 55216.83643445764
+
+mylambda = lambda row: row['Income'] if row['Women Percent'] < 50 else None
+us_census['Income in Men Dominate State'] = us_census.apply(mylambda, axis=1)
+us_census = us_census.dropna()
+print(avg_list(us_census['Income in Men Dominate State']))
+# Yields 59216.54785846784
+# Data Interpretation: Income is nearly 7000 more in Men-Dominate states
