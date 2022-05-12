@@ -1,0 +1,34 @@
+# ASSESSING VARIABLE TYPES
+
+import codecademylib3
+
+# Import pandas with alias
+import pandas as pd
+
+# Import dataset as a Pandas dataframe
+movies = pd.read_csv("netflix_movies.csv", index_col=0)
+
+# The movies dataframe is composed of the television shows and movies hosted on the Netflix platform in 2019. 
+# Print the first five rows of the dataframe using the .head() method.
+# View the first five rows of the dataframe
+print(movies.head())
+
+# The rating variable describes the Motion Picture Association Film Rating Board rating for each film \
+and the TV Parental Guidelines Monitoring Board rating for each television show. 
+# We have consolidated the ratings for simplicity.
+# Inspect the first five rows that were just printed out from the .head() method. 
+# Identify whether the rating variable is quantitative or categorical and assign the value of 'numerical' or 'categorical' to a variable called rating_variable_type.
+
+rating_variable_type = 'categorical'
+
+
+# CATEGORICAL VARIABLES
+# View the first five rows of the dataframe
+print(movies.head())
+
+
+# Print the unique values of the country column to assess its variable type.
+print(movies['country'].unique())
+
+# Identify whether the country column is ordinal or nominal and assign the value of country_variable_type to either 'ordinal', 'nominal', or 'binary'.
+country_variable_type = 'nominal'
