@@ -1,0 +1,115 @@
+# CENSUS VARIABLES 
+# You have decided to volunteer for your local community by offering to clean their recently collected census data. 
+
+import codecademylib3
+import pandas as pd
+
+census = pd.read_csv('census_data.csv', index_col=0)
+
+
+# The census dataframe is composed of simulated census data to represent demographics of a small community in the U.S.
+# Call the .head() method on the census dataframe and print the output to view the first five rows.
+
+print(census.head())
+
+
+# Review the dataframe description and values returned by .head() to assess the variable types of each of the variables.
+# This is an important step to understand what preprocessing will be necessary to work with the data.
+# Compare the values returned from the .head() method with the data types of each variable by calling .dtypes on the census dataframe and print the result.
+
+print(census.dtypes)
+
+# Yields """
+first_name         object
+last_name          object
+birth_year         object
+voted                bool
+num_children        int64
+income_year       float64
+higher_tax         object
+marital_status     object
+dtype: object
+"""
+
+
+# The manager of the census would like to know the average birth year of the respondents. 
+# We were able to see from .dtypes that birth_year has been assigned the str datatype whereas it should be expressed in int.
+# Print the unique values of the variable using the .unique() method.
+
+print(census['birth_year'].unique())
+
+# Yields: 
+['2005' '1987' '1992' '1965' '1945' '1951' '1963' '1949' '1950' '1971'
+ '2007' '1944' '1995' '1973' '1946' '1954' '1994' '1989' '1947' '1993'
+ '1976' '1984' 'missing' '1966' '1941' '2000' '1953' '1956' '1960' '2001'
+ '1980' '1955' '1985' '1996' '1968' '1979' '2006' '1962' '1981' '1959'
+ '1977' '1978' '1983' '1957' '1961' '1982' '2002' '1998' '1999' '1952'
+ '1940' '1986' '1958']
+ 
+ 
+# There appears to be a missing value in the birth_year column. With some research you find that the respondent’s birth year is 1967.
+# Use the .replace() method to replace the missing value with 1967, so that the data type can be changed to int. 
+# Then recheck the values in birth_year by calling the .unique() method and printing the results.
+
+census['birth_year'] = census.birth_year.replace('missing', '1967')
+
+print(census.birth_year.unique())
+
+# Yields:
+['2005' '1987' '1992' '1965' '1945' '1951' '1963' '1949' '1950' '1971'
+ '2007' '1944' '1995' '1973' '1946' '1954' '1994' '1989' '1947' '1993'
+ '1976' '1984' '1967' '1966' '1941' '2000' '1953' '1956' '1960' '2001'
+ '1980' '1955' '1985' '1996' '1968' '1979' '2006' '1962' '1981' '1959'
+ '1977' '1978' '1983' '1957' '1961' '1982' '2002' '1998' '1999' '1952'
+ '1940' '1986' '1958']
+ 
+ 
+ # Now that we have adjusted the values in the birth_year variable, change the datatype from str to int and print the datatypes of the census dataframe with .dtypes.
+ 
+census['birth_year'] = census.birth_year.astype('int')
+print(census.dtypes)
+
+# Yields """
+first_name         object
+last_name          object
+birth_year          int64
+voted                bool
+num_children        int64
+income_year       float64
+higher_tax         object
+marital_status     object
+dtype: object
+"""
+
+
+# Having assigned birth_year to the appropriate data type, print the average birth year of the respondents to the census using the pandas .mean() method.
+
+print(census['birth_year'].mean())
+# Yields: 1973.4
+
+
+# Your manager would like to set an order to the higher_tax variable so that: strongly disagree < disagree < neutral < agree < strongly agree.
+# Convert the higher_tax variable to the category data type with the appropriate order, then print the new order using the .unique() method.
+
+census['higher_tax'] = pd.Categorical(census['higher_tax'], ['strongly disagree', 'disagree', 'neutral', 'agree', 'strongly agree'], ordered=True)
+print(census['higher_tax'].unique())
+
+# Yields: [disagree, neutral, agree, strongly agree, strongly disagree]
+# Categories (5, object): [strongly disagree < disagree < neutral < agree < strongly agree]
+
+
+# Your manager would also like to know the median sentiment of the respondents on the issue of higher taxes for the wealthy. 
+# Label encode the higher_tax variable and print the median using the pandas .median() method.
+
+census['higher_tax'] = census['higher_tax'].cat.codes
+print(census['higher_tax'].median())
+# Yields: 2.0
+
+
+# Your manager is interested in using machine learning models on the census data in the future. 
+# To help, let’s One-Hot Encode marital_status to create binary variables of each category. 
+# Use the pandas get_dummies() method to One-Hot Encode the marital_status variable.
+# Print the first five rows of the new dataframe with the .head() method. 
+
+census = pd.get_dummies(census, columns = ['marital_status'])
+print(census.head())
