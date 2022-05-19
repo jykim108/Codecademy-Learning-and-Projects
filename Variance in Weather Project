@@ -321,3 +321,95 @@ The standard deviation of temperature in hour 22 is 4.488720965768684
 
 The mean temperature in hour 23 is 10.78493827160494
 The standard deviation of temperature in hour 23 is 4.471772406214311"""
+
+# The mean temperature is highest at 2 pm, while temperature seems highest from 10 AM to 6 PM.
+
+
+for i in range(1, 13):
+  month = london_data.loc[london_data["month"] == i]["Humidity"]
+  print("The mean humidity in month "+str(i) +" is "+ str(np.mean(month)))
+  print("The standard deviation of humidity in month "+str(i) +" is "+ str(np.std(month)) +"\n")
+  
+# Yields: """
+The mean humidity in month 1 is 83.3535703051274
+The standard deviation of humidity in month 1 is 8.873133065527902
+
+The mean humidity in month 2 is 82.57578984735534
+The standard deviation of humidity in month 2 is 9.621632621052106
+
+The mean humidity in month 3 is 73.08918459796149
+The standard deviation of humidity in month 3 is 13.775860134241247
+
+The mean humidity in month 4 is 70.25188705619234
+The standard deviation of humidity in month 4 is 15.994076078376219
+
+The mean humidity in month 5 is 66.74725022914757
+The standard deviation of humidity in month 5 is 14.850648288326726
+
+The mean humidity in month 6 is 65.55468505170793
+The standard deviation of humidity in month 6 is 15.879641788588957
+
+The mean humidity in month 7 is 67.95650661099513
+The standard deviation of humidity in month 7 is 16.610059365896717
+
+The mean humidity in month 8 is 76.02559470039145
+The standard deviation of humidity in month 8 is 15.807548771023567
+
+The mean humidity in month 9 is 79.8253402462735
+The standard deviation of humidity in month 9 is 13.16979766149916
+
+The mean humidity in month 10 is 86.30911854103343
+The standard deviation of humidity in month 10 is 10.04746526192529
+
+The mean humidity in month 11 is 86.79738562091504
+The standard deviation of humidity in month 11 is 8.23104738680556
+
+The mean humidity in month 12 is 84.91981132075472
+The standard deviation of humidity in month 12 is 7.26864446903481"""
+
+# October and November have the highest humidity on average. However, the highest variable humidity appears to be in March through September.
+
+
+for i in range(1, 13):
+  month = london_data.loc[london_data["month"] == i]["PressurehPa"]
+  print("The mean pressure in month "+str(i) +" is "+ str(np.mean(month)))
+  print("The standard deviation of pressure in month "+str(i) +" is "+ str(np.std(month)) +"\n")
+  
+# Yields: """
+The mean pressure in month 1 is 1013.5597986788299
+The standard deviation of pressure in month 1 is 14.106491830204702
+
+The mean pressure in month 2 is 1015.6794107206249
+The standard deviation of pressure in month 2 is 13.556511649441902
+
+The mean pressure in month 3 is 1019.0981030577576
+The standard deviation of pressure in month 3 is 10.470045138989715
+
+The mean pressure in month 4 is 1021.130528375734
+The standard deviation of pressure in month 4 is 7.827112622471712
+
+The mean pressure in month 5 is 1014.5946837763518
+The standard deviation of pressure in month 5 is 7.807228557599577
+
+The mean pressure in month 6 is 1019.1221560639298
+The standard deviation of pressure in month 6 is 6.807999506136155
+
+The mean pressure in month 7 is 1013.2831941544887
+The standard deviation of pressure in month 7 is 5.460288669866076
+
+The mean pressure in month 8 is 1013.1511291779584
+The standard deviation of pressure in month 8 is 5.719008444893927
+
+The mean pressure in month 9 is 1016.5393713545042
+The standard deviation of pressure in month 9 is 12.123401290069584
+
+The mean pressure in month 10 is 1016.2566869300912
+The standard deviation of pressure in month 10 is 7.362762999932348
+
+The mean pressure in month 11 is 1014.3850017199863
+The standard deviation of pressure in month 11 is 6.323997411942141
+
+The mean pressure in month 12 is 1017.443564690027
+The standard deviation of pressure in month 12 is 5.273671352121007"""
+
+# The most variable pressures are in January through March, while the highest mean pressure is in April
