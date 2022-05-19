@@ -1,0 +1,53 @@
+# SUMMARY STATISTICS
+
+# Imagine you work at a travel agency and want to inform your customers of the best time to visit one of your favorite vacation locations, Acadia, Maine. 
+# In this project, you will use flower bloom data, and flight information to recommend the best time of year for someone to make a trip to Maine.
+
+# Your goal is to create two histograms, each displaying the frequency of an occurrence each day of the year (either flights or flower blooms).
+# You will use the in_bloom variable to find a count of the number of flowers that start blooming each day of the year.
+# You will use the flights variable to find a count of the number of flights that occur each day of the year.
+
+# import codecademylib3
+import codecademylib3
+import numpy as np
+from matplotlib import pyplot as plt
+
+# load in data
+in_bloom = np.loadtxt(open("in-bloom.csv"), delimiter=",")
+flights = np.loadtxt(open("flights.csv"), delimiter=",")
+
+
+# Use Matplotlib to create a flights histogram.
+# Set the range of your histogram to (0, 365)
+# Set the number of bins in your plot to 365, so you have a separate bin for each day of the year.
+# Add an x-label, y-label, and title to your figure.
+# Now, we’re going to set up our figure so it displays two plots at once. Above your plt.hist() line, add the following: plt.figure(1), plt.subplot(211)
+# Between the last line for plotting your histogram and the show command, add plt.subplot(212).
+
+plt.figure(1)
+plt.subplot(211)
+plt.hist(flights, range=(0,365), bins=365)
+plt.title("Number of Flights Per Day")
+plt.xlabel("Day of the Year")
+plt.ylabel("Number of Flights")
+
+plt.subplot(212)
+
+
+# Under plt.subplot(212), use plt.hist() to make a histogram that displays the number of flowers that begin to bloom each day of the year.
+# Label the y-axis of the plot. In the hint, we’ve added our code.
+# Right before calling plt.show() call plt.tight_layout(). This will prevent the labels from overlapping with the graphs.
+
+plt.hist(in_bloom, range=(0,365), bins=365)
+plt.title("Number of Flower Blooms Per Day")
+plt.xlabel("Day of the Year")
+plt.ylabel("Number of Blooms")
+plt.tight_layout()
+
+plt.show()
+
+
+# How would you use these histograms to help inform customers when they should go to Acadia, Maine. 
+# For example, if someone said they wanted to visit Acadia while there weren’t many people there, but while flowers were blooming, when would you recommend?
+
+# CONCLUSION: Between day 250-300, the flowers are in bloom but there are not as many daily flights. This would be a good time to go.
