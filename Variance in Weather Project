@@ -1,0 +1,323 @@
+# SUMMARY STATISTICS
+
+# You’re planning a trip to London and want to get a sense of the best time of the year to visit. 
+# Luckily, you got your hands on a dataset from 2015 that contains over 39,000 data points about weather conditions in London. 
+# Surely, with this much information, you can discover something useful about when to make your trip!
+
+import codecademylib3_seaborn
+import pandas as pd
+import numpy as np
+from weather_data import london_data
+
+# All of the weather data is stored in a variable named london_data.
+# Print the first few rows of the dataset by calling print(london_data.head()).
+# Take a look at the browser to see the columns of this dataset. Here are two questions to ask yourself:
+# How often were measurements taken? Which columns might be the most useful when thinking about planning a trip.
+
+print(london_data.head())
+
+print(london_data.info())
+
+# Yields: """
+<class 'pandas.core.frame.DataFrame'>
+RangeIndex: 39106 entries, 0 to 39105
+Data columns (total 18 columns):
+Time                    39106 non-null object
+TemperatureC            39106 non-null float64
+DewpointC               39106 non-null float64
+PressurehPa             39106 non-null float64
+WindDirection           39106 non-null object
+WindDirectionDegrees    39106 non-null int64
+WindSpeedKMH            39106 non-null float64
+WindSpeedGustKMH        39106 non-null float64
+Humidity                39106 non-null int64
+HourlyPrecipMM          39106 non-null float64
+Conditions              0 non-null float64
+Clouds                  0 non-null float64
+dailyrainMM             39106 non-null float64
+SoftwareType            39106 non-null object
+DateUTC                 39106 non-null object
+station                 39106 non-null object
+hour                    39106 non-null int64
+month                   39106 non-null int64 """
+
+# Measurements were taken every 15 seconds after 12 seconds
+# Temperature, wind speed/direction/gust, hourly precipitation, clouds, and daily rain would all be useful while planning a trip
+
+
+# Let’s also take a look at how many data points we have. Print len(london_data)
+
+print(len(london_data))
+
+# Yields: 39106
+
+
+# Now that we’ve seen what the data looks like, let’s dive into one of the more promising columns — "TemperatureC". This column stores the temperature in Celsius.
+# Create a variable named temp and set it equal to the "TemperatureC" column of london_data.
+
+temp = london_data['TemperatureC']
+
+
+# We can now calculate descriptive statistics about this column. To begin, find the average temperature in London in 2015. 
+# Store it in a variable named average_temp.
+# Calculate the variance of the temperature column and store the results in the variable temperature_var. Print the results.
+# Calculate the standard deviation of the temperature column and store a variable named temperature_standard_deviation. Print this variable.
+# How would the variance and standard deviation help you plan a trip?
+
+average_temp = np.mean(temp)
+temperature_var = np.var(temp)
+temperature_standard_deviation = np.std(temp)
+
+print(average_temp)
+print(temperature_var)
+print(temperature_standard_deviation)
+
+# Yields: 12.081969518743925
+          29.71564252819686
+          5.451205603185121
+          
+          
+# The statistics we just calculated aren’t very helpful when trying to plan a vacation since they describe the weather throughout an entire year.
+# If we could find a way to use the rows from only a certain month, that might help us find the best month to plan our trip.
+# Once again, print london_data.head() to see the first few columns of our DataFrame. 
+# Which column will help us get only the data points from January? In the browser you can scroll to the right to see more columns.
+
+# The column 'Month' has a value of '1' for January
+# We want to filter by the "month" column! The following line of code will create a variable that gets the temperature from the rows where "month" is 6. 
+# These will be all of the rows from the month of June.
+
+june = london_data.loc[london_data["month"] == 6]["TemperatureC"]
+
+
+# Create a variable named july that contains all of the data points from July.
+# The code to do this should look very similar to your code that created the June variable. This time, we’re interested in month 7.
+
+july = london_data.loc[london_data["month"] == 7]["TemperatureC"]
+
+# Calculate and print the mean temperature in London for both June and July using the np.mean() function.
+# What do these numbers tell you? If you wanted to visit London on the month that was, on average, cooler, which month would you pick? 
+
+june_mean = np.mean(june)
+july_mean = np.mean(july)
+
+print(june_mean)
+print(july_mean)
+
+# Yields: 17.04728925101849
+          18.775608907446067
+# June would be the cooler month to go visit London
+
+
+# Calculate and print the standard deviation of temperature in London for both June and July. Remember, the function you should use is np.std().
+# What do these numbers tell you? How might the standard deviation change your decision on when to visit London? 
+
+june_std = np.std(june)
+july_std = np.std(july)
+
+print(june_std)
+print(july_std)
+
+# Yields: 4.59790920465179
+          4.136377318662113
+# Standard deviations are similar, so the deviation from the mean would be similar, although June is still cooler overall
+
+
+# If you want to quickly see the mean and standard deviation of every month, use this block of code.
+"""
+for i in range(1, 13):
+  month = london_data.loc[london_data["month"] == i]["TemperatureC"]
+  print("The mean temperature in month "+str(i) +" is "+ str(np.mean(month)))
+  print("The standard deviation of temperature in month "+str(i) +" is "+ str(np.std(month)) +"\n")"""
+  
+# During which month would you most like to visit? If you wanted to pick the month with the least variable temperature, which one would you pick?
+# Yields: """
+The mean temperature in month 1 is 5.663950927964769
+The standard deviation of temperature in month 1 is 3.5630186427365835
+
+The mean temperature in month 2 is 5.089492367767128
+The standard deviation of temperature in month 2 is 2.653391408893831
+
+The mean temperature in month 3 is 7.935419026047565
+The standard deviation of temperature in month 3 is 2.7389280396346902
+
+The mean temperature in month 4 is 10.553368744758178
+The standard deviation of temperature in month 4 is 4.081741047920951
+
+The mean temperature in month 5 is 13.597456461961503
+The standard deviation of temperature in month 5 is 3.5219412354130744
+
+The mean temperature in month 6 is 17.04728925101849
+The standard deviation of temperature in month 6 is 4.59790920465179
+
+The mean temperature in month 7 is 18.775608907446067
+The standard deviation of temperature in month 7 is 4.136377318662113
+
+The mean temperature in month 8 is 18.002258355916894
+The standard deviation of temperature in month 8 is 3.468858883252718
+
+The mean temperature in month 9 is 13.847472456254051
+The standard deviation of temperature in month 9 is 3.0170092063582463
+
+The mean temperature in month 10 is 11.982796352583588
+The standard deviation of temperature in month 10 is 3.1102852356788
+
+The mean temperature in month 11 is 10.765084279325764
+The standard deviation of temperature in month 11 is 3.726453470936296
+
+The mean temperature in month 12 is 11.261051212938007
+The standard deviation of temperature in month 12 is 2.3535513625678877"""
+
+# I would choose September, given it's low variable temperature and relatively cool, yet not too cold, mean temperature
+# December has the least variable temperature
+
+
+# By looking at the mean and standard deviation of the temperature in London during each month of the year, we can get a sense of the best time to visit.
+# Looking at the spread of the data is an important statistic to consider if you are particularly sensitive to extreme days. 
+# For example, if you pick a month with a large standard deviation, you might have one day that is relatively cold while the following day is very hot.
+# Take some time to see if you can find more insights in this dataset. Here are some ideas we have for you:
+
+# Look at columns other than "TemperatureC". Can you find something interesting about the humidity or the air pressure? Can you find the rainiest month? 
+# Filter based on"hour". Similar to how you filtered based on the month, are there certain hours that have higher variance than others?
+
+rain_day_only = london_data['dailyrainMM'].replace('nan', 0)
+most_rain = rain_day_only.max()
+print(most_rain)
+
+# Yields: 37.8
+
+
+for i in range(1, 13):
+  month = london_data.loc[london_data["month"] == i]["dailyrainMM"]
+  print("The average amount of rain in month "+str(i) +" is "+ str(np.mean(month)))
+  print("The standard deviation of rain in month "+str(i) +" is "+ str(np.std(month)))
+  print("The total amount of rain in month " + str(i) +" is "+ str(np.sum(month)) +"\n")
+
+# Yields: """
+The average amount of rain in month 1 is 0.774142812205096
+The standard deviation of rain in month 1 is 3.089180631434159
+The total amount of rain in month 1 is 2461.0
+
+The average amount of rain in month 2 is 0.03911963081292156
+The standard deviation of rain in month 2 is 0.22145244293416783
+The total amount of rain in month 2 is 110.20000000000003
+
+The average amount of rain in month 3 is 0.24116647791619478
+The standard deviation of rain in month 3 is 1.0978015705278406
+The total amount of rain in month 3 is 851.8
+
+The average amount of rain in month 4 is 0.3393346379647749
+The standard deviation of rain in month 4 is 1.0236176119521203
+The total amount of rain in month 4 is 1213.8
+
+The average amount of rain in month 5 is 0.4038496791934006
+The standard deviation of rain in month 5 is 1.573553729447081
+The total amount of rain in month 5 is 1762.4
+
+The average amount of rain in month 6 is 0.2878721403948606
+The standard deviation of rain in month 6 is 1.2356275773141627
+The total amount of rain in month 6 is 918.6000000000001
+
+The average amount of rain in month 7 is 0.7633263743910926
+The standard deviation of rain in month 7 is 3.1606716096911858
+The total amount of rain in month 7 is 2193.8
+
+The average amount of rain in month 8 is 1.2381210478771452
+The standard deviation of rain in month 8 is 4.56780473212941
+The total amount of rain in month 8 is 4111.799999999999
+
+The average amount of rain in month 9 is 1.1399546338302007
+The standard deviation of rain in month 9 is 3.9078606821837107
+The total amount of rain in month 9 is 3517.8999999999996
+
+The average amount of rain in month 10 is 0.5720668693009118
+The standard deviation of rain in month 10 is 2.201776220328459
+The total amount of rain in month 10 is 1882.1
+
+The average amount of rain in month 11 is 1.257137942896457
+The standard deviation of rain in month 11 is 2.2746293231766668
+The total amount of rain in month 11 is 3654.5000000000005
+
+The average amount of rain in month 12 is 0.7447102425876011
+The standard deviation of rain in month 12 is 1.2307379712093436
+The total amount of rain in month 12 is 2210.3"""
+
+# August has the most rain total and highest variable of rain. However, the average amount of rain is highest in November.
+
+
+for i in range(0,24):
+  hour = london_data.loc[london_data["hour"] == i]["TemperatureC"]
+  print("The mean temperature in hour "+str(i) +" is "+ str(np.mean(hour)))
+  print("The standard deviation of temperature in hour "+str(i) +" is "+ str(np.std(hour)) +"\n")
+  
+# Yields: """
+The mean temperature in hour 0 is 10.403337453646476
+The standard deviation of temperature in hour 0 is 4.416219261957561
+
+The mean temperature in hour 1 is 10.028667072428485
+The standard deviation of temperature in hour 1 is 4.32408644026013
+
+The mean temperature in hour 2 is 9.742804878048782
+The standard deviation of temperature in hour 2 is 4.316779166990312
+
+The mean temperature in hour 3 is 9.599268292682927
+The standard deviation of temperature in hour 3 is 4.324821942052419
+
+The mean temperature in hour 4 is 9.456723716381418
+The standard deviation of temperature in hour 4 is 4.340819221685511
+
+The mean temperature in hour 5 is 9.588026878436162
+The standard deviation of temperature in hour 5 is 4.467313264022462
+
+The mean temperature in hour 6 is 10.03723797780518
+The standard deviation of temperature in hour 6 is 4.860220701664751
+
+The mean temperature in hour 7 is 10.814242239805235
+The standard deviation of temperature in hour 7 is 5.164223734034033
+
+The mean temperature in hour 8 is 11.654327808471455
+The standard deviation of temperature in hour 8 is 5.300516091308809
+
+The mean temperature in hour 9 is 12.568129885748647
+The standard deviation of temperature in hour 9 is 5.466277247052002
+
+The mean temperature in hour 10 is 13.37681071211199
+The standard deviation of temperature in hour 10 is 5.562726274778771
+
+The mean temperature in hour 11 is 14.084897713598076
+The standard deviation of temperature in hour 11 is 5.64193891217329
+
+The mean temperature in hour 12 is 14.542273000601325
+The standard deviation of temperature in hour 12 is 5.693890038376814
+
+The mean temperature in hour 13 is 14.912758201701095
+The standard deviation of temperature in hour 13 is 5.717848038858898
+
+The mean temperature in hour 14 is 15.041412911084043
+The standard deviation of temperature in hour 14 is 5.8160988680265
+
+The mean temperature in hour 15 is 14.828254164096236
+The standard deviation of temperature in hour 15 is 5.918442508539502
+
+The mean temperature in hour 16 is 14.501122194513716
+The standard deviation of temperature in hour 16 is 5.913312782811574
+
+The mean temperature in hour 17 is 13.92532833020638
+The standard deviation of temperature in hour 17 is 5.761940002899612
+
+The mean temperature in hour 18 is 13.100371517027865
+The standard deviation of temperature in hour 18 is 5.33912364981775
+
+The mean temperature in hour 19 is 12.476340110905731
+The standard deviation of temperature in hour 19 is 5.02328352405751
+
+The mean temperature in hour 20 is 12.008509316770187
+The standard deviation of temperature in hour 20 is 4.759365622843109
+
+The mean temperature in hour 21 is 11.433793103448277
+The standard deviation of temperature in hour 21 is 4.557847519786083
+
+The mean temperature in hour 22 is 11.00458542713568
+The standard deviation of temperature in hour 22 is 4.488720965768684
+
+The mean temperature in hour 23 is 10.78493827160494
+The standard deviation of temperature in hour 23 is 4.471772406214311"""
