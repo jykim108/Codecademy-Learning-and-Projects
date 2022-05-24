@@ -1,0 +1,108 @@
+# ADVANCED EXPLORATORY DATA ANALYSIS
+
+# In the following project you’ll use what you’ve learned about summarizing categorical data to analyze a sample from a popular open source dataset. 
+# This dataset contains information on the cost and physical attributes of several thousand cars. 
+# Originally, this dataset was used for to train a classification model that assigned an acceptability score/category to cars based on these attributes.
+# The car evaluation dataset has been sourced from the UCI Machine Learning Repository and has been slightly modified for this project. 
+
+import pandas as pd
+
+car_eval = pd.read_csv('car_eval_dataset.csv')
+print(car_eval.head())
+
+# manufacturer_country is a nominal categorical variable that indicates the country of the manufacturer of each car reviewed. 
+# Create a table of frequencies of all the cars reviewed by manufacturer_country. 
+# What is the modal category? Which country appears 4th most frequently? Print out your results.
+
+country_count = car_eval['manufacturer_country'].value_counts(dropna=False)
+country_4 = country_count.index[3]
+
+print(country_4)
+
+# Yields: United States
+
+
+# Calculate a table of proportions for countries that appear in manufacturer_country in the dataset. What percentage of cars were manufactured in Japan?
+
+country_count = car_eval['manufacturer_country'].value_counts(dropna=False, normalize=True)
+
+print(country_count)
+
+# Yields: """
+Japan            0.228
+Germany          0.218
+South Korea      0.159
+United States    0.138
+Italy            0.097
+France           0.087
+China            0.073
+Name: manufacturer_country, dtype: float64"""
+
+
+# buying_cost is a categorical variable which describes the cost of buying any car in the dataset. Print out a list of the possible values for this variable.
+
+print(car_eval['buying_cost'].unique())
+
+# Yields: ['vhigh' 'med' 'low' 'high']
+
+
+# buying_cost is an ordinal categorical variable, which means we can create an order associated with the values in the data and perform additional numeric operations on the variable. 
+# Create a new list, buying_cost_categories, that contains the unique values in buying_cost, ordered from lowest to highest.
+# Convert buying_cost to type 'category' using the list you created in the previous exercise.
+
+buying_cost_categories = ['low', 'med', 'high', 'vhigh']
+car_eval['buying_cost'] = pd.Categorical(car_eval['buying_cost'], buying_cost_categories, ordered=True)
+
+import numpy as np
+
+median_cost = np.median(car_eval['buying_cost'].cat.codes)
+median_category = buying_cost_categories[int(median_cost)]
+print(median_category)
+
+# Yields: med
+
+
+# luggage is a categorical variable in the car evaluations dataset that records the luggage capacity for each reviewed car. 
+# Calculate a table of proportions for this variable and print the result. 
+
+luggage_proportions = car_eval['luggage'].value_counts(dropna=False, normalize=True)
+print(luggage_proportions)
+
+# Yields: """
+small    0.339
+med      0.333
+big      0.328
+Name: luggage, dtype: float64"""
+
+
+# Are there any missing values in this column? 
+# Replicate the table of proportions from the previous exercise, but do not drop any missing values from the count. Print your result.
+
+luggage_proportion_na = car_eval['luggage'].value_counts(normalize=True)
+
+print(luggage_proportion_na)
+
+# NOTE: There are no differences between the tables
+
+# Without passing normalize = True to .value_counts(), can you replicate the result you got in the previous exercises?
+
+luggage_proportion_len = car_eval['luggage'].value_counts()/len(car_eval)
+print(luggage_proportion_len)
+
+
+# doors is a categorical variable in the car evaluations dataset that records the count of doors for each reviewed car. 
+# Find the count of cars that have 5 or more doors. 
+# You can identify cars with 5+ doors by looking for cars that have a value of '5more' in the doors column. Print your result.
+
+car_doors_5more = (car_eval['doors'] == '5more').sum()
+print(car_doors_5more)
+
+# Yields 246
+
+
+# Find the proportion of cars that have 5+ doors and print the result.
+
+car_doors_5more_proportion = (car_eval['doors'] == '5more').mean()
+print(car_doors_5more_proportion)
+
+# Yields 0.246
