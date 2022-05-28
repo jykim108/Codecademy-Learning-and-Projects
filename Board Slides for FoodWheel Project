@@ -1,0 +1,109 @@
+# MATPLOTLIB CHALLENGE PROJECTS
+
+# FoodWheel is a startup delivery service that takes away the struggle of deciding where to eat.
+# FoodWheel picks you an amazing local restaurant and lets you order through the app. 
+# Senior leadership is getting ready for a big board meeting, and you have been tasked to help decipher data and create a presentation to answer several key questions:
+# What cuisines does FoodWheel offer? Which areas should the company search for more restaurants to partner with?
+# How has the average order amount changed over time? What does this say about the trajectory of the company?
+# How much has each customer on FoodWheel spent over the past six months? What can this tell us about the average FoodWheel customer?
+# Over this project, you will analyze several DataFrames and create several visualizations to help answer these questions.
+# Use your pandas and matplotlib skills to analyze and visualize the FoodWheel dataset.
+
+import codecademylib3
+
+# Before we begin analyzing our data, we need to import two Python packages. To be able to load in and inspect our datasets, we must first import the pandas package:
+# import pandas as pd
+# We will also need to create visualizations to help us analyze the data. This requires us to import pyplot, a subset of the Matplotlib package:
+# import matplotlib.pyplot as plt
+
+import pandas as pd
+import matplotlib.pyplot as plt
+
+
+# Now that we have imported the pandas package, we can begin looking at our data. 
+# Load and inspect the restaurant data from restaurants.csv into a DataFrame called restaurants.
+
+restaurants = pd.read_csv('restaurants.csv')
+print(restaurants.head())
+
+# Yields: """
+   id                name neighborhood  cuisine
+0   1          Jongro BBQ      Midtown   Korean
+1   2            Pocha 32      Midtown   Korean
+2   3  Nom Wah Tea Parlor    Chinatown  Chinese
+3   4           Roberta’s     Brooklyn    Pizza
+4   5        Speedy Romeo     Brooklyn    Pizza """
+
+
+# Now that we have our data loaded in and inspected, we can start to ask some questions about the data.
+# Suppose we wanted to know how many different types of cuisine FoodWheel offers and how many different restaurants serve that type of cuisine.
+# Print out your answers to both questions.
+
+print(restaurants.cuisine.unique())
+
+# Yields: ['Korean' 'Chinese' 'Pizza' 'Vegetarian' 'Italian' 'Japanese' 'American']
+
+
+# The board wants to make sure that FoodWheel offers a wide variety of restaurants. Having many different options makes customers more likely to come back. 
+# Create a pie chart that shows the different types of cuisines available on FoodWheel.
+
+cuisine = restaurants.cuisine.value_counts()
+print(cuisine)
+
+# Yields: """
+Chinese       11
+American      10
+Italian        8
+Japanese       4
+Vegetarian     4
+Pizza          4
+Korean         3 """
+
+cuisine_labels = ['Chinese', 'American', 'Italian', 'Vegetarian', 'Pizza', 'Japanese', 'Korean']
+
+plt.pie(cuisine, labels = cuisine_labels, autopct='%.2f')
+plt.title('Different Cuisines')
+plt.axis('equal')
+plt.show()
+
+
+# FoodWheel is a relatively new start-up. They launched one year ago and have grown more popular since then. 
+# Management suspects that the average order size has increased over time.
+# First, load in the orders.csv dataset as orders and inspect it.
+
+orders = pd.read_csv('orders.csv')
+print(orders.head())
+
+# Yields: """
+   id  customer_id       date  price
+0   1           61  6-18-2017   13.0
+1   2          210   5-8-2017   21.0
+2   3            0   9-7-2017   33.0
+3   4           66   7-7-2017   19.0
+4   5           65  4-26-2017   13.0 """
+
+# Perhaps tracking the number of orders made per month can help us determine a trend. Group the orders data by month.
+
+date = orders['date']
+month = []
+for i in date:
+  month_only = i.split('-')[0]
+  month.append(month_only)
+
+orders['month'] = month
+
+value_count = orders.month.value_counts()
+print(value_count)
+
+# Yields: """
+6    92
+4    87
+9    85
+5    85
+7    78
+8    73
+Name: month, dtype: int64 """
+
+# While we are interested in the average number of orders placed per month, it wouldn’t hurt to include the standard deviation as well. 
+# Calculate the average and standard deviation of the orders placed per month and store each in their own separate variable.
+
