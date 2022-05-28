@@ -1,0 +1,256 @@
+# ADVANCED EXPLORATORY DATA ANALYSIS
+
+# In this project, you’ll work as a data analyst for a tech startup that is looking to improve its operations after a global pandemic has taken the world by storm.
+# You will apply data transformation techniques to make better sense of the company’s data and help answer important questions such as: 
+# Is the company in good financial health? Does the company need to let go of any employees? Should the company allow employees to work from home permanently?
+
+import codecademylib3
+from sklearn import preprocessing
+import matplotlib.pyplot as plt
+import pandas as pd
+import seaborn as sns
+import numpy as np
+
+# load in financial data
+financial_data = pd.read_csv('financial_data.csv')
+
+# The management team of the company you work for is concerned about the status of the company after a global pandemic.
+# The CFO (Chief Financial Officer) asks you to perform some data analysis on the past six months of the company’s financial data.
+# This has been loaded in the variable financial_data.
+# First, examine the first few rows of the data using print() and .head().
+
+print(financial_data.head())
+
+# Yields: """
+   Month  Revenue  Expenses
+0      1  1420000    510000
+1      2  1200000    532000
+2      3  1050000    551000
+3      4   920000    612000
+4      5   807000    628000 """
+
+
+# Notice that financial_data has three columns – Month, Revenue, and Expenses.
+# Store each column in three separate variables called month, revenue, and expenses.
+
+month = financial_data['Month']
+revenue = financial_data['Revenue']
+expenses = financial_data['Expenses']
+
+
+# Next, use the following code to create a plot of revenue over the past six months:
+
+plt.plot(month,revenue)
+plt.show()
+
+
+# On the right, you should now see a plot of revenue over time. You can label and format the figure using the following functions:
+
+plt.xlabel('Month')
+plt.ylabel('Amount ($)')
+plt.title('Revenue')
+
+# These should be added before plt.show(). Add the labels to your plot.
+
+
+# Repeat steps 3 and 4 for monthly expenses. In other words, create a second plot of monthly expenses over the past 6 months. 
+# Note that you’ll need to use the function plot.clf() prior to creating this new plot. 
+# Otherwise, it will be plotted on-top of the revenue plot.
+# How are monthly expenses changing over time?
+
+plt.clf()
+plt.plot(month, expenses)
+plt.xlabel('Month')
+plt.ylabel('Expenses ($)')
+plt.title('Monthly Expenses')
+plt.show()
+
+# CONCLUSION: Monthly expenses increase by nearly 15,000 (48,000 to 65,000) in the first 6 months
+# Revenue decreases by nearly 70,000 (140,000 to 70,000) in the same time frame
+
+
+# As shown, revenue seems to be quickly decreasing while expenses are increasing. 
+# If the current trend continues, expenses will soon surpass revenues, putting the company at risk.
+# After you show this chart to the management team, they are alarmed. 
+# They conclude that expenses must be cut immediately and give you a new file to analyze called expenses.csv.
+# Use pandas to read in expenses.csv and store it in a variable called expense_overview.
+# Print the first seven rows of the data.
+
+expense_overview = pd.read_csv('expenses.csv')
+print(expense_overview.head(7))
+
+# Yields: """
+       Expense  Proportion
+0     Salaries        0.62
+1  Advertising        0.15
+2  Office Rent        0.15
+3    Equipment        0.03
+4    Utilities        0.03
+5      Supples        0.01
+6         Food        0.01 """
+
+
+# Notice that there are two columns:
+# Expense: indicates the expense category
+# Proportion: indicates how much of the overall expenses a specific category takes up
+# Store the Expense column in a variable called expense_categories and the Proportion column in a variable called proportions.
+
+expense_categories = expense_overview['Expense']
+proportions = expense_overview['Proportion']
+
+
+# Next, we want to create a pie chart of the different expense categories. 
+# Use plt.clf() again to clear the previous plot, then create a pie chart using the plt.pie() method, passing in two arguments:
+
+proportions
+labels = expense_categories
+
+# Give your pie chart a title using plt.title(), then use plt.show() at the end to show the plot. 
+
+plt.clf()
+plt.pie(proportions, labels = expense_categories)
+plt.title('Expense Categories')
+plt.show()
+
+# Notice that the pie chart currently looks deformed.
+# Above plt.show(), add in the following two lines of code to set the axis and adjust the spacing:
+
+plt.axis('Equal')
+plt.tight_layout()
+# Take a moment to look at the pie chart. Which expense categories make up most of the data, and which ones aren’t so significant?
+
+plt.clf()
+plt.pie(proportions, labels = expense_categories)
+plt.title('Expense Categories')
+plt.axis('Equal')
+plt.tight_layout()
+plt.show()
+
+# CONCLUSION: Salary makes up about 65% of the data, while advertising and office rent make up about 15% each of the data.
+# Other, minor expenses include Food, Supplies, Utilities, and Equipment
+
+# It seems that Salaries, Advertising, and Office Rent make up most of the expenses, while the rest of the categories make up a small percentage.
+# Before you hand this pie chart back to management, you would like to update the pie chart.
+# You would like all categories making up less than 5% of the overall expenses (Equipment, Utilities, Supplies, and Food) are collapsed into an “Other” category.
+# Update the pie chart accordingly.
+
+expense_categories = ['Salaries', 'Advertising', 'Office Rent', 'Other']
+proportions = [0.62, 0.15, 0.15, 0.08]
+plt.clf()
+plt.pie(proportions, labels = expense_categories)
+plt.title('Expense Categories')
+plt.axis('Equal')
+plt.tight_layout()
+plt.show()
+
+
+# This simplified pie chart helps the management team see a big picture view of the company’s expenses without getting distracted by noisy data.
+# If the company wants to cut costs in a big way, which category do you think they should focus on? Put your answer in a string variable called expense_cut.
+
+expense_cut = 'Salaries'
+
+
+# Salaries make up 62% of expenses. The management team determines that to cut costs in a meaningful way, they must let go of some employees.
+# Each employee at the company is assigned a productivity score based on their work.
+# The management would like to keep the most highly productive employees and let go of the least productive employees.
+# First, use pandas to load in employees.csv and store it in a variable called employees.
+# Print the first few rows of the data.
+
+employees = pd.read_csv('employees.csv')
+print(employees.head())
+
+# Yields: """
+              Name    Salary  Productivity  Commute Time
+0     Mason Pender     87902         29.91         16.79
+1          Mia Rew     95672         49.91         44.48
+2   Jalisa Kroenke    177864         78.00         19.40
+3  Krystal Homeyer    186643         24.36         42.06
+4    Kiana Wishart    167148          4.08         25.58 """
+
+
+# Notice that there is a Productivity column, which indicates the productivity score assigned to that employee.
+# Sort the employees data frame (in ascending order) by the Productivity column and store the result in a variable called sorted_productivity.
+# To sort a data frame, you can do the following:
+
+sorted_data = dataframe_name.sort_values(by=['Column Name'])
+# Print sorted_productivity.
+
+sorted_productivity = employees.sort_values(by=['Productivity'])
+print(sorted_productivity)
+
+
+# You should now see the employees with the lowest productivity scores at the top of the data frame.
+# The company decides to let go of the 100 least productive employees.
+# Store the first 100 rows of sorted_productivity in a new variable called employees_cut and print out the result.
+
+employees_cut = sorted_productivity[0:100]
+print(employees_cut)
+
+
+# Your colleague Sarah, a data scientist at the company, would like to explore the relationship between Income and Productivity more in depth
+# She points out that these two features are on vastly different scales.
+# For example, productivity is a feature that ranges from 0-100, but income is measured in the thousands of dollars.
+# Moreover, there are outliers in the data that add an additional layer of complexity.
+# She asks you for advice on how she should transform the data. Should she perform normalization, standardization, log transformation, or something else?
+# Put your answer in a string in a variable called transformation.
+
+transformation = 'standardization'
+
+
+# The COO (Chief Operating Officer) is debating whether to allow employees to continue to work from home post-pandemic.
+# He first wants to take a look at roughly how long the average commute time is for employees at the company. He asks for your help to analyze this data.
+# The employees data frame has a column called Commute Time that stores the commute time (in minutes) for each employee.
+# Create a variable called commute_times that stores the Commute Time column.
+# Let’s do some quick analysis on the commute times of employees.
+# Use print() and .describe() to print out descriptive statistics for commute_times.
+# What are the average and median commute times? 
+# Might it be worth it for the company to explore allowing remote work indefinitely so employees can save time during the day?
+
+commute_times = employees['Commute Time']
+print(commute_times.describe())
+
+# Yields: """
+count    300.000000
+mean      33.441700
+std       16.128369
+min        3.220000
+25%       21.667500
+50%       31.060000
+75%       42.190000
+max      101.780000
+Name: Commute Time, dtype: float64"""
+
+# CONCLUSION: The mean commute is about 33 minutes and the average commute is about 31 minutes. This equates to nearly an hour of the day.
+
+
+# Let’s explore the shape of the commute time data using a histogram.
+# First, use plt.clf() to clear the previous plots. Then use plt.hist() to plot the histogram of commute_times.
+# Finally, use plt.show() to show the plot. Feel free to add labels above plt.show() if you would like to practice!
+# What do you notice about the shape of the data? Is it symmetric, left skewed, or right skewed?
+
+plt.clf()
+plt.hist(commute_times)
+plt.xlabel('Commute Time (in minutes)')
+plt.ylabel('Count')
+plt.title('Time for Commute')
+plt.show()
+
+# CONCLUSION: The data shape is right-skewed.
+
+
+# The data seems to be skewed to the right. To make it more symmetrical, we might try applying a log transformation.
+# Right under the commute_times variable, create a variable called commute_times_log that stores a log-transformed version of commute_times.
+# To apply log-transform, you can use numpy’s log() function.
+# Replace the histogram for commute_times with one for commute_times_log.
+
+commute_times_log = np.log(commute_times)
+
+plt.clf()
+plt.hist(commute_times_log)
+plt.xlabel('Commute Time (in minutes)')
+plt.ylabel('Count')
+plt.title('Time for Commute')
+plt.show()
+
+# Notice how the shape of the data changes from being right skewed to a more symmetrical (and even slightly left-skewed) in shape. 
+# After applying log transformation, the transformed data is more “normal” than before.
