@@ -1,0 +1,53 @@
+# MATPLOTLIB CHALLENGE PROJECT
+
+# In this project, you are Dr. Jillian Bellovary, a real-life astronomer for the Hayden Planetarium at the American Museum of Natural History.
+# As an astronomer, part of your job is to study the stars. 
+# You’ve recently become interested in the constellation Orion, a warrior God from ancient Greek mythology.
+# As a researcher on the Hayden Planetarium team, you are in charge of visualizing the Orion constellation using the Matplotlib function .scatter().
+# You will create both a 2D and a 3D visualization of the position of Orion’s stars and get a better sense of their actual positions. 
+# To achieve this, you will be mapping real data from outer space that maps the position of the stars in the sky.
+# The goal of the project is to understand spatial perspective. 
+# Once you visualize Orion in both 2D and 3D, you will be able to see the difference in the constellation shape humans see from earth versus the actual position of stars.
+
+# In order to complete this project, we will need to import two Python packages. First, import pyplot as you have been importing it in previous lessons:
+# import matplotlib.pyplot as plt.
+# We also need some way to visualize the stars in 3D. To do this, import Axes3D in the following way:
+# from mpl_toolkits.mplot3d import Axes3D
+
+import codecademylib3
+
+x = [-0.41, 0.57, 0.07, 0.00, -0.29, -0.32,-0.50,-0.23, -0.23]
+y = [4.12, 7.71, 2.36, 9.10, 13.35, 8.13, 7.19, 13.25,13.43]
+z = [2.06, 0.84, 1.56, 2.07, 2.36, 1.72, 0.66, 1.25,1.38]
+
+import matplotplib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+
+
+# Astronomers describe a star’s position in the sky by using a pair of angles: declination and right ascension. 
+# Declination is similar to longitude, but it is projected on the celestial sphere. 
+# Right ascension is known as the “hour angle” because it accounts for the time of day and earth’s rotation. Both angles are relative to the celestial equator.
+# The x, y, z coordinates for each star in the collection of stars that make up the Orion constellation are documented in a paper.
+# The paper is by Nottingham Trent University on “The Orion constellation as an installation”. These have been organized and stored in lists x, y, and z in the script.py file.
+# Spend some time looking at x, y, and z. Does each fall within some range?
+
+# Before we visualize the stars in 3D, let’s get a sense of what they look like in 2D.
+# Create a 2D plot that will use the (x,y) coordinates to form the Orion constellation.
+# Does the 2D visualization look like the Orion constellation we see in the night sky?
+
+fig = plt.figure()
+fig_subplot = fig.subplot(1,1,1)
+
+plt.scatter(x,y)
+plt.show()
+
+
+# Now, create a 3D visualization of the Orion Constellation with the (x,y,z) coordinates.
+# Observe the 3D representation of the Orion constellation. Remember, this will never look exactly like the Orion we see from Earth.
+# The visualization does not curve as the night sky does.
+
+figure = plt.figure()
+figure_3d = figure.subplot(1,1,1, projection='3D')
+
+plt.scatter(x,y,z)
+plt.show()
