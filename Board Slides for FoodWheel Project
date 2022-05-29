@@ -107,3 +107,72 @@ Name: month, dtype: int64 """
 # While we are interested in the average number of orders placed per month, it wouldn’t hurt to include the standard deviation as well. 
 # Calculate the average and standard deviation of the orders placed per month and store each in their own separate variable.
 
+avg_order = orders.groupby('month')['price'].mean().reset_index()
+std_order = orders.groupby('month')['price'].std().reset_index()
+print(avg_order)
+print(std_order)
+
+
+# Yields: """
+ month      price
+0     4   9.609195
+1     5  14.858824
+2     6  15.152174
+3     7  18.012821
+4     8  21.150685
+5     9  29.505882
+  month     price
+0     4  2.562504
+1     5  3.395210
+2     6  2.835934
+3     7  2.848985
+4     8  4.455556
+5     9  4.518806 """
+
+
+# At last, we can now visualize our data. Create a bar plot that demonstrates the trend in average order size over time. 
+# Make sure to include the following information:
+# The height of each bar should come from avg_price.
+# Use the standard deviations in std_order as the year.
+# The error capsize should be 5.
+# Make sure that you label each bar with the name of the month (i.e., 4 = April).
+# Also be sure to label the y-axis.
+# Give your plot a descriptive title.
+
+plt.clf()
+plot = plt.subplot()
+plot.bar(range(len(avg_order)), avg_order.price, yerr=std_order.price, capsize=5)
+plot.set_xticks(range(len(avg_order)))
+plot.set_xticklabels(['Apr', 'May', 'June', 'July', 'Aug', 'Sept'])
+plt.ylabel('Avg Mount of Orders')
+plt.title('Avg Orders Over Time')
+plt.show()
+
+
+# There is a range of amounts that customers spend at FoodWheel. Create a customer_amount DataFrame that stores each customer and how much they order.
+
+customer_amount = orders.groupby('customer_id')['price'].sum().reset_index()
+print(customer_amount.head())
+
+# Yields: """
+   customer_id  price
+0            0   83.0
+1            2   11.0
+2            3   65.0
+3            4   32.0
+4            5  119.0 """
+
+
+# Create a histogram of the amount spent by each customer over the past six months with the following format:
+# The range should be from 0 to 200
+# The number of bins should be 40
+# Label the x-axis Total Spent
+# Label the y-axis Number of Customers
+# Add a title
+
+plt.clf()
+plt.hist(customer_amount.price.values, range=(0,200), bins=40)
+plt.xlabel('Total Spent')
+plt.ylabel('Number of Customers')
+plt.title('Amount Spent by Customers')
+plt.show()
