@@ -50,6 +50,7 @@ def coaster_rank(coastername, park, df):
   plt.ylabel('Ranking')
   plt.show()
 
+plt.clf()
 
 # Write a function that will plot the ranking of two given roller coasters over time as lines. 
 # Your function should take both roller coasters’ names and a ranking DataFrame as arguments. Make sure to include informative labels that describe your visualization.
