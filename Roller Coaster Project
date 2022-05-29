@@ -1,0 +1,80 @@
+# MATPLOTLIB CHALLENGE PROJECT
+
+# Roller coasters are thrilling amusement park rides designed to make you squeal and scream! 
+# They take you up high, drop you to the ground quickly, and sometimes even spin you upside down before returning to a stop.
+# Today you will be taking control back from the roller coasters and visualizing data covering international roller coaster rankings and roller coaster statistics.
+# Roller coasters are often split into two main categories based on their construction material: wood or steel. 
+# Rankings for the best wood and steel roller coasters from the 2013 to 2018 Golden Ticket Awards are provided.
+# Load each csv into a DataFrame and inspect it to gain familiarity with the data.
+
+import codecademylib3
+import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
+
+wood = pd.read_csv('Golden_Ticket_Award_Winners_Wood.csv')
+steel = pd.read_csv('Golden_Ticket_Award_Winners_Steel.csv')
+
+print(wood.head())
+print(steel.head())
+
+# Yields: """
+   Rank          Name  ... Points Year of Rank
+0     1  Boulder Dash  ...   1333         2013
+1     2       El Toro  ...   1302         2013
+2     3       Phoenix  ...   1088         2013
+3     4    The Voyage  ...   1086         2013
+4     5   Thunderhead  ...    923         2013
+
+   Rank                Name  ... Points Year of Rank
+0     1    Millennium Force  ...   1204         2013
+1     2             Bizarro  ...   1011         2013
+2     3  Expedition GeForce  ...    598         2013
+3     4               Nitro  ...    596         2013
+4     5    Apollo's Chariot  ...    542         2013 """
+
+# Write a function that will plot the ranking of a given roller coaster over time as a line. 
+# Your function should take a roller coaster’s name and a ranking DataFrame as arguments. Make sure to include informative labels that describe your visualization.
+# Call your function with "El Toro" as the roller coaster name and the wood ranking DataFrame. 
+# What issue do you notice? Update your function with an additional argument to alleviate the problem, and retest your function.
+
+def coaster_rank(coastername, park, df):
+  fig, ax = plt.subplots()
+  rankcoaster = df[(df['Name'] == coastername) & (df['Park'] == park)]
+  ax.plot(rankcoaster['Year of Rank'], rankcoaster['Rank'])
+  ax.set_xticks(rankcoaster['Year of Rank'].values)
+  ax.set_yticks(rankcoaster['Rank'].values)
+  ax.invert_yaxis()
+  plt.title('{} Ranking'.format(coastername))
+  plt.xlabel('Year')
+  plt.ylabel('Ranking')
+  plt.show()
+
+
+# Write a function that will plot the ranking of two given roller coasters over time as lines. 
+# Your function should take both roller coasters’ names and a ranking DataFrame as arguments. Make sure to include informative labels that describe your visualization.
+# Call your function with "El Toro" as one roller coaster name, “Boulder Dash“ as the other roller coaster name, and the wood ranking DataFrame. 
+# What issue do you notice? Update your function with two additional arguments to alleviate the problem, and retest your function.
+
+def two_coasters(coaster_1, park_1, coaster_2, park_2, df):
+  fig, ax = plt.subplots()
+  coaster_1_rank = df[(df['Name'] == coaster_1) & (df['Park'] == park_1)]
+  coaster_2_rank = df[(df['Name'] == coaster_2) & (df['Park'] == park_2)]
+  ax.plot(coaster_1_rank['Year of Rank'], coaster_1_rank['Rank'], color='blue', label=coaster_1)
+  ax.plot(coaster_2_rank['Year of Rank'], coaster_2_rank['Rank'], color='green', label=coaster_2)
+  ax.invert_yaxis()
+  plt.title('{} vs {} Ranking'.format(coaster_1, coaster_2))
+  plt.xlabel('Year')
+  plt.ylabel('Ranking')
+  plt.legend()
+  plt.show()
+  plt.close()
+
+print(two_coasters('El Toro', 'Six Flags Great Adventure', 'Boulder Dash', 'Lake Compounce', wood))
+plt.clf()
+
+
+# Write a function that will plot the ranking of the top n ranked roller coasters over time as lines. 
+# Your function should take a number n and a ranking DataFrame as arguments. Make sure to include informative labels that describe your visualization.
+# For example, if n == 5, your function should plot a line for each roller coaster that has a rank of 5 or lower.
+# Call your function with a value for n and either the wood ranking or steel ranking DataFrame.
