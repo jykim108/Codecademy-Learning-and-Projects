@@ -79,3 +79,42 @@ plt.clf()
 # Your function should take a number n and a ranking DataFrame as arguments. Make sure to include informative labels that describe your visualization.
 # For example, if n == 5, your function should plot a line for each roller coaster that has a rank of 5 or lower.
 # Call your function with a value for n and either the wood ranking or steel ranking DataFrame.
+
+def top_rankings(df, n):
+  top_ranks = df[df['Rank'] <= n]
+  fig, ax = plt.subplots()
+  for coaster in set(top_ranks['Name']):
+    ranking = top_ranks[top_ranks['Name'] == coaster]
+    ax.plot(ranking['Year of Rank'], ranking['Rank'], label=coaster)
+  ax.set_yticks([i for i in range(1,n)])
+  ax.invert_yaxis()
+  plt.title("Top {} Rankings".format(n))
+  plt.xlabel('Year')
+  plt.ylabel('Ranking')
+  plt.legend(loc=4)
+  plt.show()
+  plt.close()
+  
+plt.clf()
+
+
+# Now that you’ve visualized rankings over time, let’s dive into the actual statistics of roller coasters themselves. 
+# Captain Coaster is a popular site for recording roller coaster information. 
+# Data on all roller coasters documented on Captain Coaster has been accessed through its API and stored in roller_coasters.csv. 
+# Load the data from the csv into a DataFrame and inspect it to gain familiarity with the data.
+
+roller_coaster_stats = pd.read_csv('roller_coasters.csv')
+print(roller_coaster_stats.head())
+
+	name	      material_type seating_type	speed	height	length	  num_inversions	manufacturer	         park	            status
+0	Goudurix	      Steel	      Sit Down	   75.0	37.0	   950.0	         7.0	         Vekoma	         Parc Asterix	status.operating
+1	Dream catcher	Steel	      Suspended	45.0	25.0	   600.0	         0.0	         Vekoma	         Bobbejaanland	status.operating
+2	Alucinakis	   Steel	      Sit Down	   30.0	8.0	   250.0	         0.0	         Zamperla	         Terra Mítica	status.operating
+3	Anaconda	      Wooden	   Sit Down	   85.0	35.0	   1200.0	      0.0	         William J. Cobb	Walygator Parc	status.operating
+4	Azteka	      Steel	      Sit Down	   55.0	17.0	   500.0	         0.0	         Soquet	         Le Pal	      status.operating
+
+
+# Write a function that plots a histogram of any numeric column of the roller coaster DataFrame. 
+# Your function should take a DataFrame and a column name for which a histogram should be constructed as arguments. 
+# Make sure to include informative labels that describe your visualization.
+# Call your function with the roller coaster DataFrame and one of the column names.
