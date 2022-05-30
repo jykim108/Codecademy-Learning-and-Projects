@@ -117,4 +117,68 @@ print(roller_coaster_stats.head())
 # Write a function that plots a histogram of any numeric column of the roller coaster DataFrame. 
 # Your function should take a DataFrame and a column name for which a histogram should be constructed as arguments. 
 # Make sure to include informative labels that describe your visualization.
-# Call your function with the roller coaster DataFrame and one of the column names.
+
+def coaster_stats(df, column):
+  plt.hist(df[column].dropna())
+  plt.xlabel(column)
+  plt.ylabel('Count')
+  plt.title('Roller Coaster Data of {}'.format(column))
+  plt.show()
+  plt.close()
+  
+plt.clf()
+
+# Write a function that creates a bar chart showing the number of inversions for each roller coaster at an amusement park. 
+# Your function should take the roller coaster DataFrame and an amusement park name as arguments. 
+# Make sure to include informative labels that describe your visualization.
+
+def inversions(df, park_name):
+  park_coasters = df[df['park'] == park_name]
+  park_coasters = park_coasters.sort_values('num_inversions', ascending = False)
+  coasters = park_coasters['name']
+  inversions = park_coasters['num_inversions']
+  plt.bar(range(len(inversions)), inversions)
+  ax = plt.subplot()
+  ax.set_xticks(range(len(coasters)))
+  ax.set_xticklabels(coasters, rotation=90)
+  plt.title('Number of Inversions at {}'.format(park_name))
+  plt.xlabel('Roller Coasters')
+  plt.ylabel('# of Inversions')
+  plt.show()
+  plt.close()
+  
+plf.clf()
+
+
+# Write a function that creates a pie chart that compares the number of operating roller coasters to the number of closed roller coasters. 
+# Your function should take the roller coaster DataFrame as an argument. 
+
+def pie_chart(df):
+  operating = df[df['status'] == 'status.operating']
+  closed = df[df['status'] == 'status.closed.definitely']
+  num_operating = len(operating)
+  num_closed = len(closed)
+  total_numbers = [num_operating, num_closed]
+  plt.pie(total_numbers, autopct='%0.1f%%', labels=['Operating', 'Closed'])
+  plt.axis('equal')
+  plt.show()
+  plt.close()
+
+plt.clf()
+
+
+# .scatter() is another useful function in matplotlib that you might not have seen before. 
+# .scatter() produces a scatter plot, which is similar to .plot() in that it plots points on a figure. 
+# .scatter(), however, does not connect the points with a line. This allows you to analyze the relationship between to variables.
+# Find .scatter()‘s documentation here.
+
+# Write a function that creates a scatter plot of two numeric columns of the roller coaster DataFrame. 
+# Your function should take the roller coaster DataFrame and two-column names as arguments. Make sure to include informative labels that describe your visualization.
+
+def scatter_plot(df, column1, column2):
+  plt.scatter(df[column1], df[column2])
+  plt.title('Relationship Between {} and {}'.format(column1, column2))
+  plt.xlabel(column1)
+  plt.ylabel(column2)
+  plt.show()
+  plt.close()
