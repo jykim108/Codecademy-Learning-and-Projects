@@ -1,0 +1,314 @@
+# ADDING BY INDEX: INSERT
+
+# We are helping out a popular grocery store called Jiho’s Produce.
+# Every week the store has to choose the order in which it displays some of its popular items on sale in the front window to attract customers.
+# Jiho, the store owner, likes to store the items for the display in a list.
+
+front_display_list = ["Mango", "Filet Mignon", "Chocolate Milk"]
+print(front_display_list)
+
+
+# Jiho found out some great news! "Pineapple" is back in stock.
+# Jiho would like to put "Pineapple" in the front of the list so it is the first item customers see in the display window.
+# Use .insert() to add "Pineapple" to the front of the list. Print the resulting list to see the change.
+
+front_display_list.insert(0, 'Pineapple')
+print(front_display_list)
+
+# Prints: ['Pineapple', 'Mango', 'Filet Mignon', 'Chocolate Milk']
+
+
+
+# REMOVING BY INDEX: POP
+
+# We have decided to pursue the study of data science in addition to our computer science coursework.
+# We signed up for an online school that would help us become proficient.
+# Check out the current list of topics we will be studying in our code editor.
+
+data_science_topics = ["Machine Learning", "SQL", "Pandas", "Algorithms", "Statistics", "Python 3"]
+print(data_science_topics)
+
+# It looks like we have an overlap with our computer science curriculum for the topic of "Python 3".
+# Let’s remove the topic from the list of data_science_topics using our newly learned .pop() method.
+# Print data_science_topics to see your result.
+
+data_science_topics.pop()
+print(data_science_topics)
+
+# Prints: ['Machine Learning', 'SQL', 'Pandas', 'Algorithms', 'Statistics']
+
+
+# Looks like there is overlap on the "Algorithms" topic as well. Let’s use .pop() to remove it as well.
+# Print data_science_topics to see the changes
+
+data_science_topics.pop(3)
+print(data_science_topics)
+
+# Prints: ['Machine Learning', 'SQL', 'Pandas', 'Statistics']
+
+
+
+# CONSECUTIVE LISTS: RANGE
+# The function range() takes a single input, and generates numbers starting at 0 and ending at the number before the input.
+
+number_list = range(3)
+print(list(number_list))
+
+# Modify number_list so that it is a range containing numbers starting at 0 and up to, but not including, 9.
+
+number_list = range(9)
+print(list(number_list))
+
+# Prints: [0, 1, 2, 3, 4, 5, 6, 7, 8]
+
+
+# Create a range called zero_to_seven with the numbers 0 through 7. Print the result in list form.
+
+zero_to_seven = range(8)
+print(list(zero_to_seven))
+
+# Prints: [0, 1, 2, 3, 4, 5, 6, 7]
+
+
+
+# THE POWER OF RANGE
+
+# By default, range() creates a list starting at 0. However, if we call range() with two inputs, we can create a list that starts at a different number.
+# If we use a third input, we can create a list that “skips” numbers.
+# For example, range(2, 9, 2) will give us a list where each number is 2 greater than the previous number.
+
+range_five_three = range(5, 15, 2)
+
+# Modify the range() function that created the range range_five_three such that it:
+'''
+Starts at 5
+Has a difference of 3 between each item
+Ends before 15
+'''
+
+range_five_three = range(5, 15, 3)
+print(list(range_five_three))
+
+# Prints: [5, 8, 11, 14]
+
+
+# Create a range called range_diff_five that:
+'''
+Starts at 0
+Has a difference of 5 between each item
+Ends before 40
+'''
+
+range_diff_five = range(0, 40, 5)
+print(list(range_diff_five))
+
+# Prints: [0, 5, 10, 15, 20, 25, 30, 35]
+
+
+
+# LENGTH
+
+long_list = [1, 5, 6, 7, -23, 69.5, True, "very", "long", "list", "that", "keeps", "going.", "Let's", "practice", "getting", "the", "length"]
+big_range = range(2, 3000, 10)
+
+# Calculate the length of long_list and save it to the variable long_list_len.
+# Use print() to examine long_list_len.
+
+long_list_len = len(long_list)
+print(long_list_len)
+
+# Prints: 18
+
+# We have provided a completed range() function for the variable big_range.
+# Calculate its length using the function len() and save it to a variable called big_range_length.
+# Use print() to examine big_range_length.
+
+big_range_length = len(big_range)
+print(big_range_length)
+
+# Prints: 300
+
+
+# Change the range() function that generates big_range so that it skips 100 instead of 10 steps between items.
+# How does this change big_range_length?
+
+big_range = range(2, 3000, 100)
+big_range_length = len(big_range)
+print(big_range_length)
+
+# Prints: 30
+
+
+# SLICING LISTS
+
+# Use print() to examine the variable beginning.
+# Before hitting Run think about what elements beginning will contain?
+
+suitcase = ["shirt", "shirt", "pants", "pants", "pajamas", "books"]
+beginning = suitcase[0:4]
+
+print(beginning)
+
+# Prints: ['shirt', 'shirt', 'pants', 'pants']
+
+
+# Modify beginning, so that it selects the first 2 elements of suitcase.
+
+beginning = suitcase[0:2]
+print(beginning)
+
+# Prints: ['shirt', 'shirt']
+
+
+# Create a new list called middle that contains the middle two items ( ["pants", "pants"] ) from suitcase. Print middle to see the slice!
+
+middle = suitcase[2:4]
+print(middle)
+
+# Prints: ['pants', 'pants']
+
+
+# Create a new list called last_two_elements containing the final two elements of suitcase.
+# Print last_two_elements to see your result.
+
+suitcase = ["shirt", "shirt", "pants", "pants", "pajamas", "books"]
+
+last_two_elements = suitcase[-2:]
+print(last_two_elements)
+
+# Prints: ['pajamas', 'books']
+
+
+# Create a new list called slice_off_last_three containing all but the last three elements.
+# Print slice_off_last_three to see your result.
+
+slice_off_last_three = suitcase[:-3]
+print(slice_off_last_three)
+
+# Prints: ['shirt', 'shirt', 'pants']
+
+
+
+# COUNTING IN A LIST
+
+# In Python, it is common to want to count occurrences of an item in a list.
+# Notice that since .count() returns a value, we can assign it to a variable to use it.
+# We can even use .count() to count element appearances in a two-dimensional list.
+
+votes = ["Jake", "Jake", "Laurie", "Laurie", "Laurie", "Jake", "Jake", "Jake", "Laurie", "Cassie", "Cassie", "Jake", "Jake", "Cassie", "Laurie", "Cassie", "Jake", "Jake", "Cassie", "Laurie"]
+
+# Mrs. Wilson’s class is voting for class president. She has saved each student’s vote into the list votes.
+# Use .count() to determine how many students voted for "Jake" and save the value to a variable called jake_votes.
+# Use print() to examine jake_votes.
+
+jake_votes = votes.count('Jake')
+print(jake_votes)
+
+
+
+# SORTING LISTS
+
+# Often, we will want to sort a list in either numerical (1, 2, 3, …) or alphabetical (a, b, c, …) order.
+# We can sort a list using the method .sort().
+# .sort() also provides us the option to go in reverse. Instead of sorting in ascending order like we just saw, we can do so in descending order.
+
+addresses = ["221 B Baker St.", "42 Wallaby Way", "12 Grimmauld Place", "742 Evergreen Terrace", "1600 Pennsylvania Ave", "10 Downing St."]
+
+# Use .sort() to sort addresses.
+# Use print() to see how addresses changed.
+
+addresses.sort()
+print(addresses)
+
+# Prints: ['10 Downing St.', '12 Grimmauld Place', '1600 Pennsylvania Ave', '221 B Baker St.', '42 Wallaby Way', '742 Evergreen Terrace']
+
+
+names = ["Ron", "Hermione", "Harry", "Albus", "Sirius"]
+#sort(names)
+
+# Remove the # and whitespace in front of the line sort(names). Edit this line so that it runs without producing a NameError.
+
+names.sort()
+print(names)
+
+# Prints: ['Albus', 'Harry', 'Hermione', 'Ron', 'Sirius']
+
+
+# Use print to examine sorted_cities. Why is it not the sorted version of cities?
+
+cities = ["London", "Paris", "Rome", "Los Angeles", "New York"]
+sorted_cities = cities.sort()
+print(sorted_cities)
+
+# CONCLUSION: .sort() does not return a value; therefore, it returns None when printed
+
+
+# Edit the .sort() call on cities such that it sorts the cities in reverse order (descending).
+# Print cities to see the result.
+
+cities.sort(reverse = True)
+print(cities)
+
+# Prints: ['Rome', 'Paris', 'New York', 'Los Angeles', 'London']
+
+
+# A second way of sorting a list in Python is to use the built-in function sorted().
+# The sorted() function is different from the .sort() method in two ways:
+# It comes before a list, instead of after as all built-in functions do.
+# It generates a new list rather than modifying the one that already exists.
+
+games = ["Portal", "Minecraft", "Pacman", "Tetris", "The Sims", "Pokemon"]
+
+# Use sorted() to order games and create a new list called games_sorted.
+# Print both games and games_sorted. How are they different?
+
+games_sorted = sorted(games)
+print(games)
+print(games_sorted)
+
+# Prints: 
+'''
+['Portal', 'Minecraft', 'Pacman', 'Tetris', 'The Sims', 'Pokemon']
+['Minecraft', 'Pacman', 'Pokemon', 'Portal', 'Tetris', 'The Sims']
+'''
+
+# CONCLUSION: sorted() does not modify the original list and creates a new list with new values
+
+
+
+# REVIEW:
+
+# Our friend Jiho has been so successful in both the flower and grocery business that she has decided to open a furniture store.
+# Jiho has compiled a list of inventory items into a list called inventory and wants to know a few facts about it.
+# First, how many items are in the warehouse?
+# Save the answer to a variable called inventory_len.
+
+inventory = ["twin bed", "twin bed", "headboard", "queen bed", "king bed", "dresser", "dresser", "table", "table", "nightstand", "nightstand", "king bed", "king bed", "twin bed", "twin bed", "sheets", "sheets", "pillow", "pillow"]
+
+# Select the first element in inventory. Save it to a variable called first.
+# Select the last element from inventory. Save it to a variable called last.
+# Select items from the inventory starting at index 2 and up to, but not including, index 6.
+# Save your answer to a variable called inventory_2_6.
+# Select the first 3 items of inventory. Save it to a variable called first_3.
+
+inventory_len = len(inventory)
+first = inventory[0]
+last = inventory[-1]
+inventory_2_6 = inventory[2:6]
+first_3 = inventory[:3]
+
+
+# How many 'twin bed's are in inventory? Save your answer to a variable called twin_beds.
+# Remove the 5th element in the inventory. Save the value to a variable called removed_item.
+# There was a new item added to our inventory called "19th Century Bed Frame".
+# Use the .insert() method to place the new item as the 11th element in our inventory.
+# Sort inventory using the .sort() method or the sorted() function.
+# Print inventory to see the result.
+
+twin_beds = inventory.count('twin bed')
+removed_item = inventory.pop(4)
+inventory.insert(10, '19th Century Bed Frame')
+inventory.sort()
+print(inventory)
+
+# Prints: ['19th Century Bed Frame', 'dresser', 'dresser', 'headboard', 'king bed', 'king bed', 'nightstand', 'nightstand', 'pillow', 'pillow', 'queen bed', 'sheets', 'sheets', 'table', 'table', 'twin bed', 'twin bed', 'twin bed', 'twin bed']
