@@ -1,0 +1,67 @@
+# FOR LOOPS: INTRODUCTION
+
+# In a for loop, we will know in advance how many times the loop will need to iterate because we will be working on a collection with a predefined length. 
+# In our examples, we will be using Python lists as our collection of elements.
+# With for loops, on each iteration, we will be able to perform an action on each element of the collection.
+
+board_games = ["Settlers of Catan", "Carcassone", "Power Grid", "Agricola", "Scrabble"]
+sport_games = ["football", "hockey", "baseball", "cricket"]
+
+for game in board_games:
+print(game)
+
+# Run the code.
+# We should get an IndentationError because the print(game) line is not indented.
+# Indent (2 spaces or tab) line 6 so that we don’t get an IndentationError when you run the code.
+
+for game in board_games:
+  print(game)
+  
+# Prints: 
+'''
+Settlers of Catan
+Carcassone
+Power Grid
+Agricola
+Scrabble
+'''
+
+# Write a for loop that prints each sport in the list sport_games.
+
+for sport in sport_games:
+  print(sport)
+
+# Prints:
+'''
+football
+hockey
+baseball
+cricket
+'''
+
+
+
+# FOR LOOPS: USING RANGE
+
+# Often we won’t be iterating through a specific list (or any collection), but rather only want to perform a certain action multiple times.
+# To create arbitrary collections of any length, we can pair our for loops with the trusty Python built-in function range().
+# An example of how the range() function works, this code generates a collection of 6 integer elements from 0 to 5:
+
+six_steps = range(6)
+
+# We can then use the range directly in our for loops as the collection to perform a six-step iteration.
+# Use the range() function in a for loop to print() out the provided promise variable five times.
+
+promise = "I will finish the python loops module!"
+
+for i in range(5):
+  print(promise)
+  
+# Prints:
+'''
+I will finish the python loops module!
+I will finish the python loops module!
+I will finish the python loops module!
+I will finish the python loops module!
+I will finish the python loops module!
+'''
