@@ -16,3 +16,47 @@ This message has an offset of 10. Can you decode it?
 '''
 
 # Use your Python skills to decode Vishal’s message and print the result.
+
+import string
+
+alphabet = string.ascii_lowercase
+message = 'xuo jxuhu! jxyi yi qd unqcfbu ev q squiqh syfxuh. muhu oek qrbu je tusetu yj? y xefu ie! iudt cu q cuiiqwu rqsa myjx jxu iqcu evviuj!'
+
+def coded_message(coded_message, offset):
+  solved_cipher = ''
+  for letter in coded_message:
+    if not (letter in alphabet):
+      solved_cipher += letter
+    else:
+      location = alphabet.find(letter)
+      letter_position = (location + offset) % 26
+      new_letter = alphabet[letter_position]
+      solved_cipher += new_letter
+  return solved_cipher
+  
+print(coded_message(message, 10))
+
+# Prints: hey there! this is an example of a caesar cipher. were you able to decode it? i hope so! send me a message back with the same offset!
+
+
+reverse_message = 'it must be fun to send coded messages!'
+print(coded_message(reverse_message, 10))
+
+# Prints: sd wecd lo pex dy coxn mynon wocckqoc!
+
+
+# Vishal sent over another reply, this time with two coded messages!
+# Okay here are two more messages, the first one is coded just like before with an offset of ten, and it contains a hint for decoding the second message!
+# First message: jxu evviuj veh jxu iusedt cuiiqwu yi vekhjuud. 
+# Second message: bqdradyuzs ygxfubxq omqemd oubtqde fa oapq kagd yqeemsqe ue qhqz yadq eqogdq!
+
+first_message = 'jxu evviuj veh jxu iusedt cuiiqwu yi vekhjuud.'
+print(coded_message(first_message, 10))
+
+# Prints: the offset for the second message is fourteen.
+
+
+second_message = 'bqdradyuzs ygxfubxq omqemd oubtqde fa oapq kagd yqeemsqe ue qhqz yadq eqogdq!'
+print(coded_message(second_message, 14))
+
+# Prints: performing multiple caesar ciphers to code your messages is even more secure!
