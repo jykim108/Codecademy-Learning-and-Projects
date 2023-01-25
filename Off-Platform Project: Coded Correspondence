@@ -146,4 +146,20 @@ def vigenere_cipher(coded_message, keyword):
   return solved_cipher
 
 
-# MARKING THIS PROJECT TO COME BACK TO LATER
+# Realized that I had used the wrong coded message in the function, as well as had else statement indented incorrectly.
+# Correct solution below:
+
+def vigenere_cipher(coded_message, keyword):
+  solved_cipher = ''
+  key_index = 0
+  for i in range(len(coded_message)):
+   if coded_message[i] in alphabet:
+    solved_cipher += alphabet[(alphabet.index(coded_message[i]) + alphabet.index(keyword[key_index % len(keyword)])) % len(alphabet)]
+    key_index += 1  
+   else:
+      solved_cipher += coded_message[i]
+  return solved_cipher
+
+print(vigenere_cipher('txm srom vkda gl lzlgzr qpdb? fepb ejac! ubr imn tapludwy mhfbz cza ruxzal wg zztcgcexxch!', 'friends'))
+
+# Prints: you were able to decode this? nice work! you are becoming quite the expert at crytography!
