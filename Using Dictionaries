@@ -1,0 +1,41 @@
+# USING DICTIONARIES IN PYTHON
+
+# GET A KEY
+# Once you have a dictionary, you can access the values in it by providing the key. 
+# We have provided a dictionary that maps the elements of astrology to the zodiac signs. Print out the list of zodiac signs associated with the "earth" element.
+# Print out the list of the "fire" signs.
+
+zodiac_elements = {"water": ["Cancer", "Scorpio", "Pisces"], "fire": ["Aries", "Leo", "Sagittarius"], "earth": ["Taurus", "Virgo", "Capricorn"], "air":["Gemini", "Libra", "Aquarius"]}
+
+
+print(zodiac_elements['earth'])
+print(zodiac_elements['fire'])
+
+# Prints: 
+['Taurus', 'Virgo', 'Capricorn']
+['Aries', 'Leo', 'Sagittarius']
+
+
+# Use a try block to try to print the caffeine level of "matcha". If there is a KeyError, print "Unknown Caffeine Level".
+
+caffeine_level = {"espresso": 64, "chai": 40, "decaf": 0, "drip": 120}
+
+try: 
+  print(caffeine_level['matcha'])
+except KeyError:
+  print('Unknown Caffeine Level')
+  
+# Prints: Unknown Caffeine Level
+
+
+# Above the try block, add "matcha" to the dictionary with a value of 30.
+
+caffeine_level = {"espresso": 64, "chai": 40, "decaf": 0, "drip": 120}
+caffeine_level['matcha'] = 30
+
+try: 
+  print(caffeine_level['matcha'])
+except KeyError:
+  print('Unknown Caffeine Level')
+  
+# Prints: 30
