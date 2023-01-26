@@ -1,0 +1,53 @@
+# READING A FILE
+
+# Use with to open the file welcome.txt. Save the file object as text_file.
+# Read the contents of text_file and save the results in text_data.
+# Print out text_data.
+
+with open('welcome.txt') as text_file:
+  text_data = text_file.read()
+  print(text_data)
+
+# Prints: Congratulations on reading your first file at codecademy.com!
+
+
+
+# ITERATING THROUGH LINES
+
+# When we read a file, we might want to grab the whole document in a single string, like .read() would return. But what if we wanted to store each line in a variable? 
+# We can use the .readlines() function to read a text file line by line instead of having the whole thing.
+
+# Using a with statement, create a file object pointing to the file how_many_lines.txt. Store that file object in the variable lines_doc.
+# Iterate through each of the lines in lines_doc.readlines() using a for loop.
+# Inside the for loop print out each line of how_many_lines.txt.
+
+with open('how_many_lines.txt') as lines_doc:
+  for line in lines_doc.readlines():
+    print(line)
+    
+# Prints:
+'''
+1. How many lines do we write on the daily,
+2. Many money, we write many many many
+3. How many lines do you write on the daily,
+4. Say you say many money, you write many many many
+'''
+
+
+# READING A LINE
+
+# Sometimes you don’t want to iterate through a whole file. For that, there’s a different file method, .readline(), which will only read a single line at a time. 
+# If the entire document is read line by line in this way subsequent calls to .readline() will not throw an error but will start returning an empty string (""). 
+# Using a with statement, create a file object pointing to the file just_the_first.txt. Store that file object in the variable first_line_doc.
+# Save the first line of just_the_first.txt into the variable first_line.
+# Print out the variable first_line.
+
+with open('just_the_first.txt') as first_line_doc:
+  first_line = first_line_doc.readline()
+  print(first_line)
+  
+# Prints: You do look, my son, in a moved sort,
+
+
+
+# WRITING A FILE
