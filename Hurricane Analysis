@@ -111,3 +111,18 @@ print(new_info)
 
 # In addition to organizing the hurricanes in a dictionary with names as the key, you want to be able to organize the hurricanes by year.
 # Write a function that converts the current dictionary of hurricanes to a new dictionary, where the keys are years and the values are lists containing a dictionary for each hurricane that occurred in that year.
+
+year_as_key = []
+
+def new_key(dictionary):
+  for n, m, y, mw, aa, dmg, death in zip(names, months, years, max_sustained_winds, areas_affected, new_list, deaths):
+    new_dictionary = {y: {'Name': n, 'Month': m, 'Year': y, 'Max Sustained Wind': mw, 'Areas Affected': aa, 'Damage': dmg, 'Deaths': death}}
+    year_as_key.append(new_dictionary)
+
+new_key(new_info)
+
+
+# You believe that knowing how often each of the areas of the Atlantic are affected by these strong hurricanes is important for making preparations for future hurricanes.
+# Write a function that counts how often each area is listed as an affected area of a hurricane. 
+# Store and return the results in a dictionary where the keys are the affected areas and the values are counts of how many times the areas were affected.
+# Test your function on your hurricane dictionary.
