@@ -126,3 +126,22 @@ new_key(new_info)
 # Write a function that counts how often each area is listed as an affected area of a hurricane. 
 # Store and return the results in a dictionary where the keys are the affected areas and the values are counts of how many times the areas were affected.
 # Test your function on your hurricane dictionary.
+
+def area_count(areas_affected_list):
+  new_list = {}
+  for aa in areas_affected:
+    for i in aa:
+      if i not in new_list:
+        new_list[i] = 1
+      else:
+        new_list[i] += 1
+  return new_list
+  
+  area_count(areas_affected)
+  
+  # Prints: {'Central America': 9, 'Mexico': 7, 'Cuba': 6, 'Florida': 6, 'The Bahamas': 7,... 'United States Gulf Coast (especially Florida Panhandle)': 1}
+  
+  
+  
+  # WILL COME BACK TO PROJECT
+  
